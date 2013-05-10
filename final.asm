@@ -1,11 +1,9 @@
 ; FINAL PROJECT - ECE 151
 ; MARK BRYK AND KELVIN LIN
 
-	LIST	P=PIC16F877A
+	LIST	P=PIC16F877A9
 	include <p16F877A.inc>
-
 	__CONFIG _HS_OSC & _WDT_OFF & _PWRTE_ON & _CP_OFF & _LVP_OFF
-
 
 CASE0	EQU	0x00
 CASE1	EQU	0x10
@@ -20,72 +18,45 @@ CASE9	EQU	0x90
 CASE10	EQU	0xA0
 CASE11	EQU	0xB0
 CASE12	EQU	0xC0
-INS1	EQU 0x20
-INS2	EQU 0x21
-OUTALU	EQU 0x22
-MYSTATUS EQU 0x23
-BB		EQU	0x24
-BTITLE	EQU 0x25
-PC2		EQU 0x26
-PC1		EQU 0x27
+
+CBLOCK	0x20
+INS1
+INS2
+MYSTATUS
+PC
+DATAWRITE
+OFFSET
+OFFTMP
+DATATMP
+BB
+ENDC
 
 	ORG 0x00
 	goto	start
+	
 
 	ORG 0x10
 start
 	bsf	STATUS, RP0	; Bank 1
 	movlw 	0x07 
 	movwf	ADCON1 ; Set all lower bits of ADCON Special Reg to allow I/O from PORTE
-	movlw	0x00	; All bits output
+	movlw	0xFF
 	movwf	TRISA	; 	PORTA = 6 bits- Inputs from ALU
+	movlw	0x00	; All bits output
 	movwf	TRISB	; 	PORTB = Outputs to ALU - INS2
-	movwf	TRISC	;	PORTC = First Half of Instruction 
-	movwf 	TRISD	;	PORTD = Second Half of Instruction, then Outputs to ALU - 4 bits - CIN, Mode
-	movwf 	TRISE	;	
+	movwf	TRISC	;	PORTC = First Half of Instruction 	
 	bcf	STATUS, RP0	; Bank 0
 	
 	MOVLW 0x00 ; clear PC
-	MOVWF	PC1
-	MOVWF	PC2
-	
-	MOVLW	0x07
-	MOVWF	PORTE
+	MOVWF	PC	
+	GOTO	LJMP
+
 
 LSTART
-	bsf		STATUS, RP0
-	movlw	0x00
-	movwf	TRISA
-	bcf		STATUS, RP0
-
-	INCF 	PC2, F
-	BTFSC	STATUS, Z;
-	INCF	PC1, F
+	INCF	PC, F
 
 LJMP	
-	MOVF	PC1, W
-	MOVWF	PORTA
-	MOVF	PC2, W
-	MOVWF	PORTB
-		
-	bsf		STATUS, RP0
-	movlw	0xff
-	movwf	TRISC
-	movwf	TRISD
-	bcf		STATUS, RP0
-
-	MOVF	PORTD, W; Read instruction 2 from EEPROM - THIS WILL CHANGE to PORTC
-	MOVWF	INS2    ; Store instruction 2
-	MOVF 	PORTC, W; Read instruction 1 from EEPROM
-	MOVWF	INS1    ; Store instruction 1
-	
-	bsf		STATUS, RP0
-	movlw	0xff
-	movwf	TRISA
-	movlw	0x00
-	movwf	TRISC
-	movwf	TRISD
-	bcf		STATUS, RP0
+	CALL	readins
 	
 	MOVF	INS1, W;
 	ANDLW	0xF0	; Take first 4 bits of Ins1 = Mode
@@ -134,38 +105,27 @@ L0	nop
 	GOTO	LSTART
 
 L1	; ADD
-		
-	; Grab B title, send it to SRAM
-			MOVLW	0x05	; Clear ~OE and Set ~WE
-			MOVWF	PORTE
-
 			MOVF	INS2, W	
 			ANDLW	0xF0
-			MOVWF	BTITLE		
-			SWAPF	BTITLE
-			MOVF	BTITLE, W
-			MOVWF	PORTC
-	;Read B bucket from SRAM and store
-			MOVF	PORTA, W	
-			MOVWF	BB
-			SWAPF	BB
-	; Grab C title, send it to SRAM
+			MOVWF	OFFSET
+			SWAPF	OFFSET
+			
+			CALL	readdata
+			MOVWF	PORTB
+			SWAPF	PORTB, F
+		; Grab C title,
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	PORTB
-			MOVF	BB, W
-		XORWF	PORTB, F	; now port B is full with buckets
+			MOVWF	OFFSET
+
+	;Read C bucket and put in bottom of Port B (to ALU)
+			CALL	readdata
+			XORWF	PORTB, F	; now port B is full with buckets
 
 	; Set 3 mode bits on port d and send to ALU
 		MOVLW	0x07     
-		MOVWF	PORTD
+		MOVWF	PORTC
 
-
-			MOVLW	0x01
-			MOVWF	PORTE
 	; Clear Z and C bits of MyStatus Register		
 		MOVLW	0xFC          
 		ANDWF	MYSTATUS, F
@@ -177,245 +137,179 @@ L1	; ADD
 	; Grab A title, send it to SRAM, while Port A is feeding in the result.
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 	
 L2	; SUB
-			MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-			MOVWF	PORTE
-
-	; Grab B title, send it to SRAM
 			MOVF	INS2, W	
 			ANDLW	0xF0
-			MOVWF	BTITLE		
-			SWAPF	BTITLE
-			MOVF	BTITLE, W
-			MOVWF	PORTC
-	;Read B bucket from SRAM and store
-			MOVF	PORTA, W	
-			MOVWF	BB
-			SWAPF	BB
-	; Grab C title, send it to SRAM
+			MOVWF	OFFSET
+			SWAPF	OFFSET
+			
+			CALL	readdata
+			MOVWF	PORTB
+			SWAPF	PORTB, F
+		; Grab C title,
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	PORTB
-			MOVF	BB, W
-		XORWF	PORTB, F	; now port B is full with buckets
-	
+			MOVWF	OFFSET
+
+	;Read C bucket and put in bottom of Port B (to ALU)
+			CALL	readdata
+			XORWF	PORTB, F	; now port B is full with buckets
+
 	; Set 3 mode bits on port d and send to ALU
 		MOVLW	0x06     
-		MOVWF	PORTD				
-	
-			MOVLW	0x01
-			MOVWF	PORTE
+		MOVWF	PORTC
 
-	; Clear Z and C bits of MyStatus Register
+	; Clear Z and C bits of MyStatus Register		
 		MOVLW	0xFC          
 		ANDWF	MYSTATUS, F
 		BTFSS	PORTA, 5      ; Check Z and C ALU outputs in PortA
 		BSF		MYSTATUS, 0
 		BTFSS	PORTA, 6
-		BSF		MYSTATUS, 1
+		BSF		MYSTATUS, 1	
 
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
-
 L3	; AND
-			MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-			MOVWF	PORTE	
-	; Grab B title, send it to SRAM
 			MOVF	INS2, W	
 			ANDLW	0xF0
-			MOVWF	BTITLE		
-			SWAPF	BTITLE
-			MOVF	BTITLE, W
-			MOVWF	PORTC
-
-	;Read B bucket from SRAM and store
-			MOVF	PORTA, W	
-			MOVWF	BB
-			SWAPF	BB
-	; Grab C title, send it to SRAM
+			MOVWF	OFFSET
+			SWAPF	OFFSET
+			
+			CALL	readdata
+			MOVWF	PORTB
+			SWAPF	PORTB, F
+		; Grab C title,
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-			BSF		PORTC, 4
-			BCF		PORTC, 5
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	PORTB
-			MOVF	BB, W
-		XORWF	PORTB, F	; now port B is full with buckets
-			
+			MOVWF	OFFSET
+
+	;Read C bucket and put in bottom of Port B (to ALU)
+			CALL	readdata
+			XORWF	PORTB, F	; now port B is full with buckets
+
 	; Set 3 mode bits on port d and send to ALU
 		MOVLW	0x00     
-		MOVWF	PORTD
-			MOVLW	0x01
-			MOVWF	PORTE
-	; Clear Z bits of MyStatus Register
-	   MOVLW	0xFD
-	   ANDWF	MYSTATUS, F
-	   BTFSS	PORTA, 6
-	   BSF		MYSTATUS, 1
-	
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
+		MOVWF	PORTC
+
+	; Clear Z and C bits of MyStatus Register		
+		MOVLW	0xFD          
+		ANDWF	MYSTATUS, F
+		BTFSS	PORTA, 6
+		BSF		MYSTATUS, 1	
+
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
 L4	; OR
-			MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-			MOVWF	PORTE	
-	; Grab B title, send it to SRAM
 			MOVF	INS2, W	
 			ANDLW	0xF0
-			MOVWF	BTITLE		
-			SWAPF	BTITLE
-			MOVF	BTITLE, W
-			MOVWF	PORTC
-
-	;Read B bucket from SRAM and store
-			MOVF	PORTA, W	
-			MOVWF	BB
-			SWAPF	BB
-	; Grab C title, send it to SRAM
+			MOVWF	OFFSET
+			SWAPF	OFFSET
+			
+			CALL	readdata
+			MOVWF	PORTB
+			SWAPF	PORTB, F
+		; Grab C title,
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-			BSF		PORTC, 4
-			BCF		PORTC, 5
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	PORTB
-			MOVF	BB, W
-		XORWF	PORTB, F	; now port B is full with buckets
-			
+			MOVWF	OFFSET
+
+	;Read C bucket and put in bottom of Port B (to ALU)
+			CALL	readdata
+			XORWF	PORTB, F	; now port B is full with buckets
+
 	; Set 3 mode bits on port d and send to ALU
 		MOVLW	0x01     
-		MOVWF	PORTD
-			MOVLW	0x01
-			MOVWF	PORTE
-	
+		MOVWF	PORTC
 
-	; Clear Z bit of MyStatus Register
-	   MOVLW	0xFD
-	   ANDWF	MYSTATUS, F
-	   BTFSS	PORTA, 6
-	   BSF		MYSTATUS, 1
-	
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
+	; Clear Z and C bits of MyStatus Register		
+		MOVLW	0xFD          
+		ANDWF	MYSTATUS, F
+		BTFSS	PORTA, 6
+		BSF		MYSTATUS, 1	
+
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
 L5	; XOR
-			MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-			MOVWF	PORTE
-
-	; Grab B title, send it to SRAM
 			MOVF	INS2, W	
 			ANDLW	0xF0
-			MOVWF	BTITLE		
-			SWAPF	BTITLE
-			MOVF	BTITLE, W
-			MOVWF	PORTC
-
-	;Read B bucket from SRAM and store
-			MOVF	PORTA, W	
-			MOVWF	BB
-			SWAPF	BB
-	; Grab C title, send it to SRAM
+			MOVWF	OFFSET
+			SWAPF	OFFSET
+			
+			CALL	readdata
+			MOVWF	PORTB
+			SWAPF	PORTB, F
+		; Grab C title,
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-			BSF		PORTC, 4
-			BCF		PORTC, 5
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	PORTB
-			MOVF	BB, W
-		XORWF	PORTB, F	; now port B is full with buckets
-		
+			MOVWF	OFFSET
+
+	;Read C bucket and put in bottom of Port B (to ALU)
+			CALL	readdata
+			XORWF	PORTB, F	; now port B is full with buckets
+
 	; Set 3 mode bits on port d and send to ALU
 		MOVLW	0x02     
-		MOVWF	PORTD
-			MOVLW	0x01
-			MOVWF	PORTE
-	; Clear Z bit of MyStatus Register
-	   MOVLW	0xFD
-	   ANDWF	MYSTATUS, F
-	   BTFSS	PORTA, 6
-	   BSF		MYSTATUS, 1
-	
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
+		MOVWF	PORTC
+
+	; Clear Z and C bits of MyStatus Register		
+		MOVLW	0xFD          
+		ANDWF	MYSTATUS, F
+		BTFSS	PORTA, 6
+		BSF		MYSTATUS, 1	
+
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
 L6	;Shift Case
-		MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-		MOVWF	PORTE
 		BTFSC	INS2, 7	
 		GOTO	L6R		; Right Shift
 ; Left Shift	
-	; Grab "B" title, send it to SRAM
+	; Grab "B" title
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-	;Read C bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
+			MOVWF	OFFSET
+			SWAPF	OFFSET, F
+			CALL 	readdata	
 			MOVWF	PORTB
-			SWAPF	PORTB	
-		MOVLW	0x03
-		MOVWF	PORTD
-	
-			MOVLW	0x01
-			MOVWF	PORTE
+			SWAPF	PORTB, F
+			
+			MOVLW	0x03
+			MOVWF	PORTD
+
 	; Clear C bit of MyStatus Register
 		MOVLW	0xFE
 		ANDWF	MYSTATUS, F
@@ -425,13 +319,10 @@ L6	;Shift Case
 	; Grab A title, send it to SRAM, while Port A is feeding in the result.
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
@@ -439,13 +330,14 @@ L6	;Shift Case
 	; Grab "B" title, send it to SRAM
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
-	;Read "B" bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
+			MOVWF	OFFSET
+			SWAPF	OFFSET, F
+			CALL 	readdata	
 			MOVWF	PORTB
-			SWAPF	PORTB	
-		MOVLW	0x04
-		MOVWF	PORTD
+			SWAPF	PORTB, F
+			
+			MOVLW	0x04
+			MOVWF	PORTD
 	
 			MOVLW	0x01
 			MOVWF	PORTE
@@ -458,195 +350,273 @@ L6	;Shift Case
 	; Grab A title, send it to SRAM, while Port A is feeding in the result.
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
 L7 	;Not Case
-			MOVLW	0x05	; Clear ~OE and Set ~WE - Ready to read in
-			MOVWF	PORTE
 	; Grab "B" title, send it to SRAM
 			MOVF	INS2, W
 			ANDLW	0x0F
-			MOVWF	PORTC
+			MOVWF	OFFSET
 	;Read "B" bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
+			CALL 	readdata
 			MOVWF	PORTB
 			SWAPF	PORTB	
-		MOVLW	0x05
-		MOVWF	PORTD
+			
+			MOVLW	0x05
+			MOVWF	PORTD
 	
-			MOVLW	0x01
-			MOVWF	PORTE
-	; Clear C bit of MyStatus Register
+	; Clear Z bit of MyStatus Register
 		MOVLW	0xFD
 		ANDWF	MYSTATUS, F
 		BTFSS	PORTA, 6
 		BSF		MYSTATUS, 1
 	
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
 			MOVF	INS1, W		
 			ANDLW	0x0F
-			MOVWF	PORTC
-			
-			MOVLW	0x00
-			MOVWF	PORTE
-			nop 		; ALU outputs write to SRAM
-			MOVLW	0x07 ; Fill Port E with ones (3 bit port)
-			MOVWF	PORTE
+			MOVWF	OFFSET
+			MOVF	PORTA, W
+			MOVWF	DATAWRITE
+			CALL	writedata
 
 	GOTO	LSTART
 
 L8	;Move Case
+	;Clear the Z bit
+	MOVLW	0xFD
+	ANDWF	MYSTATUS, F
 	BTFSC	INS2, 7
 	GOTO	L8b ; This is move FF
 	
-	; unset TRISCA 
-			bsf	STATUS, RP0	; Bank 1
-			movlw	0x00
-			movwf 	TRISA
-			bcf	STATUS, RP0	; Bank 0
-			MOVF INS2, W
-			ANDLW	0x0F
-			MOVWF	PORTA
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
-			MOVF	INS1, W		
-			ANDLW	0x0F
-			MOVWF	PORTC
-			BCF		PORTC, 4
-			BCF		PORTC, 5
+		MOVF INS2, W
+		ANDLW	0x0F
+		MOVWF	DATAWRITE
 	
-			BSF	STATUS, RP0	; Bank 1
-			MOVLW	0xFF
-			MOVWF	TRISA
-			BCF		STATUS, RP0	; Bank 0
+	; set the Z bit of MyStatus Register
+		BTFSS	STATUS, Z
+		BSF		MYSTATUS, 1
 
+		MOVF	INS1, W		
+		ANDLW	0x0F
+		MOVWF	OFFSET
+		CALL	writedata
+			
 	GOTO LSTART
 
 L8b	;Move Case 1 - MOVE FF
-	; Finally, we will be writing to SRAM via Port A (I.e. DRIVING PORT A)
-	; Grab "B" title, send it to SRAM
-			MOVF	INS2, W
-			ANDLW	0x0F
-			MOVWF	PORTC
-	;Read "B" bucket from SRAM and put in bottom of Port B (to ALU)
-			MOVF	PORTA, W	
-			MOVWF	BB
-	
-	; unset TRISCA 
-			bsf	STATUS, RP0	; Bank 1
-			movlw	0x00
-			movwf 	TRISA
-			bcf	STATUS, RP0	; Bank 0
-			MOVF	BB, W
-			MOVWF	PORTA
-	; Grab A title, send it to SRAM, while Port A is feeding in the result.
-			MOVF	INS1, W		
-			ANDLW	0x0F
-			MOVWF	PORTC
-			BCF		PORTC, 4
-			BCF		PORTC, 5
-	
-			BSF	STATUS, RP0	; Bank 1
-			MOVLW	0xFF
-			MOVWF	TRISA
-			BCF		STATUS, RP0	; Bank 0
+		MOVF	INS2, W
+		ANDLW	0x0F
+		MOVWF	OFFSET
+		CALL	readdata
+		
+		MOVWF	DATAWRITE
+
+	; set the Z bit of MyStatus Register
+		BTFSS	STATUS, Z
+		BSF		MYSTATUS, 1
+
+		MOVF	INS1, W		
+		ANDLW	0x0F
+		MOVWF	OFFSET
+		CALL	writedata
+
 	GOTO LSTART
 
 L9	;LOD
-	GOTO LSTART
-L10	;STO
+	;Clear the Z bit
+	MOVLW	0xFD
+	ANDWF	MYSTATUS, F
+	BTFSC	INS2, 7
+	GOTO	L9b 	
+	
+	;Given offset
+	MOVF	INS2, W
+	MOVWF	OFFSET
+	CALL	readdata
+
+	; set the Z bit of MyStatus Register
+	BTFSS	STATUS, Z
+	BSF		MYSTATUS, 1
+
+	MOVWF	DATAWRITE
+	MOVF	INS1, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	writedata
+	GOTO	LSTART
+
+L9b	;Given Rb as offset
+	MOVF	INS2, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	OFFTMP
+	SWAPF	OFFTMP, F
+	INCF	OFFSET, F
+	CALL	readdata
+	XORWF	OFFTMP, W
+	MOVWF	OFFSET
+	CALL	readdata
+
+	; set the Z bit of MyStatus Register
+	BTFSS	STATUS, Z
+	BSF		MYSTATUS, 1
+
+	MOVWF	DATAWRITE
+	MOVF	INS1, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	writedata
+	
 	GOTO LSTART
 
-L11	;TSC/TSS
-	MOVLW	0x05
-	MOVWF	PORTE
+L10	;STO
+	;Clear the Z bit
+	MOVLW	0xFD
+	ANDWF	MYSTATUS, F
+
+	BTFSC	INS2, 7
+	GOTO	L10b ; This is from Rb
 	
+	MOVF	INS1, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	DATAWRITE
+	
+	; set the Z bit of MyStatus Register
+	BTFSS	STATUS, Z
+	BSF		MYSTATUS, 1
+	
+	MOVF	INS2, W
+	MOVWF	OFFSET
+	CALL	writedata
+
+	GOTO	LSTART
+	
+L10b
+	MOVF	INS1, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	DATAWRITE
+
+	; set the Z bit of MyStatus Register
+	BTFSS	STATUS, Z
+	BSF		MYSTATUS, 1
+
+	MOVF	INS2, W
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	OFFTMP
+	SWAPF	OFFTMP, F
+	INCF	OFFSET, F
+	CALL	readdata
+	XORWF	OFFTMP, W
+	MOVWF	OFFSET
+	CALL	writedata
+
+	GOTO 	LSTART
+
+L11	;TSC/TSS	
 	;Find out what bb is
 	MOVF	INS2, W
 	ANDLW	0x03
 	MOVWF	BB
 
+	MOVF	INS1, W		
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	
+	MOVWF	DATATMP
+	
 	BTFSC	INS2, 7
-	GOTO	L11S ; This is TSS
-	; Grab A title, send it to SRAM
-			MOVF	INS1, W		
-			ANDLW	0x0F
-			MOVWF	PORTC
+	GOTO	L11b ; This is TSS
 
+	BTFSS	DATATMP, BB
+	INCF	PC, F
+	GOTO 	LSTART	
 
-	;Read A bucket from SRAM
-			BTFSS	PORTA, BB
-			GOTO	LPCINC
-			GOTO 	LSTART	
-
-L11S
-	; Grab A title, send it to SRAM
-			MOVF	INS1, W		
-			ANDLW	0x0F
-			MOVWF	PORTC
-
-	;Read A bucket from SRAM
-			BTFSC	PORTA, BB
-			GOTO	LPCINC
-			GOTO 	LSTART
-
-LPCINC
-	INCF 	PC2, F
-	BTFSC	STATUS, Z;
-	INCF	PC1, F
-	GOTO LSTART
+L11b
+	BTFSC	DATATMP, BB
+	INCF	PC, F
+	GOTO 	LSTART	
 
 L12	;Jump
 	BTFSC	INS1, 3
-	GOTO	L12b ; This is TSS
+	GOTO	L12b ; This is Jump based on Rb
 	
-	MOVF	INS1, W
-	ANDLW	0x07
-	MOVWF	PC1
+	;MOVF	INS1, W
+	;ANDLW	0x07
+	;MOVWF	PC1
 	
 	MOVF	INS2, W
-	MOVWF	PC2
+	MOVWF	PC
 	GOTO 	LJMP
 
 L12b
 	; Grab A title, send it to SRAM
 	MOVF	INS2, W		
 	ANDLW	0x0F
-	MOVWF	PORTC
-
-	;Read A bucket from SRAM
-	MOVF	PORTA, W
-	ANDLW	0x07
-	MOVWF	PC1
-	nop;
-
-	INCF	INS2
-	MOVF	INS2, W		
-	ANDLW	0x0F
-	MOVWF	PORTC
-
-	;Read A bucket from SRAM
-	MOVF	PORTA, W
-	MOVWF	PC2	
-	SWAPF	PC2
-	nop;
-	
-	INCF	INS2
-	MOVF	INS2, W		
-	ANDLW	0x0F
-	MOVWF	PORTC
-
-	;Read A bucket from SRAM
-	MOVF	PORTA, W
-	XORWF	PC2, F
-
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	PC
+	SWAPF	PC, F
+	INCF	OFFSET, F
+	CALL	readdata
+	XORWF	PC, F
 	GOTO LJMP
+
+	ORG 0x200	
+writedata:
+	movlw	0xA0
+	addwf	OFFSET, W
+	bsf	STATUS, RP0	; Bank 1
+	movwf	FSR
+	bcf	STATUS, RP0	; Bank 0
+	movf	DATAWRITE, W
+	bsf	STATUS, RP0	; Bank 1
+	MOVWF	INDF
+	bcf STATUS, RP0
+	return
+
+readdata:
+	movlw	0xA0
+	addwf	OFFSET, W
+	bsf	STATUS, RP0	; Bank 1
+	movwf	FSR
+	MOVF	INDF, W
+	bcf	STATUS, RP0	; Bank 0
+	return
+
+readins:
+	BCF	STATUS, C
+	RLF	PC, W;
+	BSF STATUS, RP1 ;
+	BCF STATUS, RP0 ;Bank 2
+	MOVWF EEADR ;to read from
+	BSF STATUS, RP0 ;Bank 3
+	BCF EECON1, EEPGD ;Point to Data memory
+	BSF EECON1, RD ;Start read operation
+	BCF STATUS, RP0 ;Bank 2
+	MOVF EEDATA, W ;
+	BCF	STATUS, RP1
+	MOVWF	INS1
 	
+	BSF STATUS, RP1
+	INCF EEADR, F ;to read from
+	BSF STATUS, RP0 ;Bank 3
+	BCF EECON1, EEPGD ;Point to Data memory
+	BSF EECON1, RD ;Start read operation
+	BCF STATUS, RP0 ;Bank 2
+	MOVF EEDATA, W ;W = EEDATA
+	BCF	STATUS, RP1
+	MOVWF	INS2
+	return
 END

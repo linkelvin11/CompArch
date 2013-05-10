@@ -1,12 +1,13 @@
 MPLINK 4.47, Linker
-Linker Map File - Created Wed May 08 14:26:40 2013
+Linker Map File - Created Fri May 10 01:19:11 2013
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000002
                    .cinit    romdata   0x000001    program   0x000004
-                   .org_1       code   0x000010    program   0x000370
+                   .org_1       code   0x000010    program   0x0002ec
+                   .org_2       code   0x000200    program   0x00004e
      .config_2007_FINAL.O       code   0x002007    program   0x000002
 
 
@@ -15,36 +16,41 @@ Linker Map File - Created Wed May 08 14:26:40 2013
                                Start         End      
                            ---------   ---------      
                             0x000000    0x000002      
-                            0x000010    0x0001c7      
+                            0x000010    0x000185      
+                            0x000200    0x000226      
                             0x002007    0x002007      
-            444 out of 8454 program addresses used, program memory utilization is 5%
+            417 out of 8454 program addresses used, program memory utilization is 4%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                       L0   0x000063    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L1   0x000065    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L10   0x000192    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L11   0x000193    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     L11S   0x0001a0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L12   0x0001aa    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     L12b   0x0001b2    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L2   0x00008a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L3   0x0000af    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L4   0x0000d4    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L5   0x0000f9    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L6   0x00011e    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L6R   0x000139    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L7   0x000150    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L8   0x000169    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L8b   0x00017c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L9   0x000191    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     LJMP   0x000026    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                   LPCINC   0x0001a6    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                   LSTART   0x00001f    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L0   0x000047    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L1   0x000049    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L10   0x000145    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L10b   0x000154    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L11   0x000167    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L11b   0x000174    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L12   0x000177    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L12b   0x00017c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L2   0x000064    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L3   0x00007f    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L4   0x000098    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L5   0x0000b1    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L6   0x0000ca    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L6R   0x0000e0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L7   0x0000f6    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L8   0x000109    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L8b   0x000117    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L9   0x000123    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L9b   0x000132    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     LJMP   0x00001d    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                   LSTART   0x00001c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                 readdata   0x00020a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                  readins   0x000211    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                     start   0x000010    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                writedata   0x000200    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
 
 
 
@@ -52,25 +58,29 @@ Linker Map File - Created Wed May 08 14:26:40 2013
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                     start   0x000010    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                   LSTART   0x00001f    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     LJMP   0x000026    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L0   0x000063    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L1   0x000065    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L2   0x00008a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L3   0x0000af    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L4   0x0000d4    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L5   0x0000f9    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L6   0x00011e    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L6R   0x000139    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L7   0x000150    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L8   0x000169    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L8b   0x00017c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                       L9   0x000191    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L10   0x000192    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L11   0x000193    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     L11S   0x0001a0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                   LPCINC   0x0001a6    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                      L12   0x0001aa    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                     L12b   0x0001b2    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                   LSTART   0x00001c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     LJMP   0x00001d    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L0   0x000047    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L1   0x000049    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L2   0x000064    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L3   0x00007f    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L4   0x000098    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L5   0x0000b1    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L6   0x0000ca    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L6R   0x0000e0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L7   0x0000f6    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L8   0x000109    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L8b   0x000117    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                       L9   0x000123    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L9b   0x000132    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L10   0x000145    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L10b   0x000154    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L11   0x000167    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L11b   0x000174    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                      L12   0x000177    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                     L12b   0x00017c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                writedata   0x000200    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                 readdata   0x00020a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                  readins   0x000211    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
 
 
