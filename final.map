@@ -1,5 +1,5 @@
 MPLINK 4.47, Linker
-Linker Map File - Created Sun May 12 09:35:51 2013
+Linker Map File - Created Mon May 13 23:18:41 2013
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -7,7 +7,7 @@ Linker Map File - Created Sun May 12 09:35:51 2013
                    .org_0       code   0x000000    program   0x000002
                    .cinit    romdata   0x000001    program   0x000004
                    .org_1       code   0x000010    program   0x000320
-                   .org_2       code   0x000200    program   0x00004e
+                   .org_2       code   0x000200    program   0x000078
      .config_2007_FINAL.O       code   0x002007    program   0x000002
 
 
@@ -17,9 +17,9 @@ Linker Map File - Created Sun May 12 09:35:51 2013
                            ---------   ---------      
                             0x000000    0x000002      
                             0x000010    0x00019f      
-                            0x000200    0x000226      
+                            0x000200    0x00023b      
                             0x002007    0x002007      
-            443 out of 8454 program addresses used, program memory utilization is 5%
+            464 out of 8454 program addresses used, program memory utilization is 5%
 
 
 
@@ -50,10 +50,12 @@ Linker Map File - Created Sun May 12 09:35:51 2013
                       L9b   0x000138    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                      LJMP   0x00001d    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                    LSTART   0x00001c    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                 readdata   0x00020a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                  readins   0x000211    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                 readdata   0x00020e    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                readinput   0x000220    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                  readins   0x000226    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                     start   0x000010    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                 writedata   0x000200    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+              writeoutput   0x000219    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
 
 
 
@@ -86,7 +88,9 @@ Linker Map File - Created Sun May 12 09:35:51 2013
                      L13b   0x000193    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                       L14   0x00019d    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
                 writedata   0x000200    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                 readdata   0x00020a    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
-                  readins   0x000211    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                 readdata   0x00020e    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+              writeoutput   0x000219    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                readinput   0x000220    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
+                  readins   0x000226    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\final.asm
 
 

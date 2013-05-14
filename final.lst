@@ -1,4 +1,4 @@
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  1
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -42,739 +42,770 @@ Warning[205]: Found directive in column 1. (CBLOCK)
   00000020            00025 INS1
   00000021            00026 INS2
   00000022            00027 MYSTATUS
-  00000023            00028 PC
-  00000024            00029 DATAWRITE
-  00000025            00030 OFFSET
-  00000026            00031 OFFTMP
-  00000027            00032 DATATMP
-  00000028            00033 BB
-  00000029            00034 TOS
+  00000023            00028 BANKSELECT
+  00000024            00029 PC
+  00000025            00030 DATAWRITE
+  00000026            00031 OFFSET
+  00000027            00032 OFFTMP
+  00000028            00033 DATATMP
+  00000029            00034 BB
+  0000002A            00035 TOS
 Warning[205]: Found directive in column 1. (ENDC)
-                      00035 ENDC
-                      00036 
-                      00037         ORG 0x00
-0000   2???           00038         goto    start
-                      00039         
-                      00040 
-                      00041         ORG 0x10
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  2
+                      00036 ENDC
+                      00037 
+                      00038         ORG 0x00
+0000   2???           00039         goto    start
+                      00040         
+                      00041 
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0010                  00042 start
-0010   1683           00043         bsf     STATUS, RP0     ; Bank 1
-0011   3007           00044         movlw   0x07 
+                      00042         ORG 0x10
+0010                  00043 start
+0010   1683           00044         bsf     STATUS, RP0     ; Bank 1
+0011   3007           00045         movlw   0x07 
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0012   009F           00045         movwf   ADCON1 ; Set all lower bits of ADCON Special Reg to allow I/O from PORTE
-0013   30FF           00046         movlw   0xFF
+0012   009F           00046         movwf   ADCON1 ; Set all lower bits of ADCON Special Reg to allow I/O from PORTE
+0013   30FF           00047         movlw   0xFF
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0014   0085           00047         movwf   TRISA   ;       PORTA = 6 bits- Inputs from ALU
-0015   3000           00048         movlw   0x00    ; All bits output
+0014   0085           00048         movwf   TRISA   ;       PORTA = 6 bits- Inputs from ALU
+0015   3000           00049         movlw   0x00    ; All bits output
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0016   0086           00049         movwf   TRISB   ;       PORTB = Outputs to ALU - INS2
+0016   0086           00050         movwf   TRISB   ;       PORTB = Outputs to ALU - INS2
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0017   0087           00050         movwf   TRISC   ;       PORTC = First Half of Instruction       
-0018   1283           00051         bcf     STATUS, RP0     ; Bank 0
-                      00052         
-0019   3000           00053         MOVLW 0x00 ; clear PC
-001A   00A3           00054         MOVWF   PC      
-001B   2???           00055         GOTO    LJMP
-                      00056 
+0017   0087           00051         movwf   TRISC   ;       PORTC = First Half of Instruction       
+0018   1283           00052         bcf     STATUS, RP0     ; Bank 0
+                      00053         
+0019   3000           00054         MOVLW 0x00 ; clear PC
+001A   00A4           00055         MOVWF   PC      
+001B   2???           00056         GOTO    LJMP
                       00057 
-001C                  00058 LSTART
-001C   0AA3           00059         INCF    PC, F
-                      00060 
-001D                  00061 LJMP    
-001D   2???           00062         CALL    readins
-                      00063         
-001E   0820           00064         MOVF    INS1, W;
-001F   39F0           00065         ANDLW   0xF0    ; Take first 4 bits of Ins1 = Mode
-                      00066         
-0020   3A00           00067         XORLW   CASE0   ; If W is Case0, this will make W 0;
-0021   1903           00068         BTFSC   STATUS, Z
-0022   2???           00069         GOTO    L0
-0023   3A10           00070         XORLW   CASE1
-0024   1903           00071         BTFSC   STATUS, Z
-0025   2???           00072         GOTO    L1
-0026   3A30           00073         XORLW   CASE1^CASE2
-0027   1903           00074         BTFSC   STATUS, Z
-0028   2???           00075         GOTO    L2
-0029   3A10           00076         XORLW   CASE2^CASE3
-002A   1903           00077         BTFSC   STATUS, Z
-002B   2???           00078         GOTO    L3
-002C   3A70           00079         XORLW   CASE3^CASE4
-002D   1903           00080         BTFSC   STATUS, Z
-002E   2???           00081         GOTO    L4
-002F   3A10           00082         XORLW   CASE4^CASE5
-0030   1903           00083         BTFSC   STATUS, Z
-0031   2???           00084         GOTO    L5
-0032   3A30           00085         XORLW   CASE5^CASE6
-0033   1903           00086         BTFSC   STATUS, Z
-0034   2???           00087         GOTO    L6
-0035   3A10           00088         XORLW   CASE6^CASE7
-0036   1903           00089         BTFSC   STATUS, Z
-0037   2???           00090         GOTO    L7
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  3
+                      00058 
+001C                  00059 LSTART
+001C   0AA4           00060         INCF    PC, F
+                      00061 
+001D                  00062 LJMP    
+001D   2???           00063         CALL    readins
+                      00064         
+001E   0820           00065         MOVF    INS1, W;
+001F   39F0           00066         ANDLW   0xF0    ; Take first 4 bits of Ins1 = Mode
+                      00067         
+0020   3A00           00068         XORLW   CASE0   ; If W is Case0, this will make W 0;
+0021   1903           00069         BTFSC   STATUS, Z
+0022   2???           00070         GOTO    L0
+0023   3A10           00071         XORLW   CASE1
+0024   1903           00072         BTFSC   STATUS, Z
+0025   2???           00073         GOTO    L1
+0026   3A30           00074         XORLW   CASE1^CASE2
+0027   1903           00075         BTFSC   STATUS, Z
+0028   2???           00076         GOTO    L2
+0029   3A10           00077         XORLW   CASE2^CASE3
+002A   1903           00078         BTFSC   STATUS, Z
+002B   2???           00079         GOTO    L3
+002C   3A70           00080         XORLW   CASE3^CASE4
+002D   1903           00081         BTFSC   STATUS, Z
+002E   2???           00082         GOTO    L4
+002F   3A10           00083         XORLW   CASE4^CASE5
+0030   1903           00084         BTFSC   STATUS, Z
+0031   2???           00085         GOTO    L5
+0032   3A30           00086         XORLW   CASE5^CASE6
+0033   1903           00087         BTFSC   STATUS, Z
+0034   2???           00088         GOTO    L6
+0035   3A10           00089         XORLW   CASE6^CASE7
+0036   1903           00090         BTFSC   STATUS, Z
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0038   3AF0           00091         XORLW   CASE7^CASE8
-0039   1903           00092         BTFSC   STATUS, Z
-003A   2???           00093         GOTO    L8
-003B   3A10           00094         XORLW   CASE8^CASE9
-003C   1903           00095         BTFSC   STATUS, Z
-003D   2???           00096         GOTO    L9
-003E   3A30           00097         XORLW   CASE9^CASE10
-003F   1903           00098         BTFSC   STATUS, Z
-0040   2???           00099         GOTO    L10
-0041   3A10           00100         XORLW   CASE10^CASE11
-0042   1903           00101         BTFSC   STATUS, Z
-0043   2???           00102         GOTO    L11
-0044   3A70           00103         XORLW   CASE11^CASE12
-0045   1903           00104         BTFSC   STATUS, Z
-0046   2???           00105         GOTO    L12
-0047   3A10           00106         XORLW   CASE12^CASE13
-0048   1903           00107         BTFSC   STATUS, Z
-0049   2???           00108         GOTO    L13
-004A   3A30           00109         XORLW   CASE13^CASE14
-004B   1903           00110         BTFSC   STATUS, Z
-004C   2???           00111         GOTO    L14
-                      00112 
-004D   0000           00113 L0      nop
-004E   2???           00114         GOTO    LSTART
-                      00115 
-004F                  00116 L1      ; ADD
-004F   0821           00117                         MOVF    INS2, W 
-0050   39F0           00118                         ANDLW   0xF0
-0051   00A5           00119                         MOVWF   OFFSET
+0037   2???           00091         GOTO    L7
+0038   3AF0           00092         XORLW   CASE7^CASE8
+0039   1903           00093         BTFSC   STATUS, Z
+003A   2???           00094         GOTO    L8
+003B   3A10           00095         XORLW   CASE8^CASE9
+003C   1903           00096         BTFSC   STATUS, Z
+003D   2???           00097         GOTO    L9
+003E   3A30           00098         XORLW   CASE9^CASE10
+003F   1903           00099         BTFSC   STATUS, Z
+0040   2???           00100         GOTO    L10
+0041   3A10           00101         XORLW   CASE10^CASE11
+0042   1903           00102         BTFSC   STATUS, Z
+0043   2???           00103         GOTO    L11
+0044   3A70           00104         XORLW   CASE11^CASE12
+0045   1903           00105         BTFSC   STATUS, Z
+0046   2???           00106         GOTO    L12
+0047   3A10           00107         XORLW   CASE12^CASE13
+0048   1903           00108         BTFSC   STATUS, Z
+0049   2???           00109         GOTO    L13
+004A   3A30           00110         XORLW   CASE13^CASE14
+004B   1903           00111         BTFSC   STATUS, Z
+004C   2???           00112         GOTO    L14
+                      00113 
+004D   0000           00114 L0      nop
+004E   2???           00115         GOTO    LSTART
+                      00116 
+004F                  00117 L1      ; ADD
+004F   0821           00118                         MOVF    INS2, W 
+0050   39F0           00119                         ANDLW   0xF0
+0051   00A6           00120                         MOVWF   OFFSET
 Message[305]: Using default destination of 1 (file).
-0052   0EA5           00120                         SWAPF   OFFSET
-                      00121                         
-0053   2???           00122                         CALL    readdata
-0054   0086           00123                         MOVWF   PORTB
-0055   0E86           00124                         SWAPF   PORTB, F
-                      00125                 ; Grab C title,
-0056   0821           00126                         MOVF    INS2, W
-0057   390F           00127                         ANDLW   0x0F
-0058   00A5           00128                         MOVWF   OFFSET
-                      00129 
-                      00130         ;Read C bucket and put in bottom of Port B (to ALU)
-0059   2???           00131                         CALL    readdata
-005A   0686           00132                         XORWF   PORTB, F        ; now port B is full with buckets
-                      00133 
-                      00134         ; Set 3 mode bits on port d and send to ALU
-005B   3007           00135                 MOVLW   0x07     
-005C   0087           00136                 MOVWF   PORTC
-                      00137 
-                      00138         ; Clear Z and C bits of MyStatus Register               
-005D   30FC           00139                 MOVLW   0xFC          
-005E   05A2           00140                 ANDWF   MYSTATUS, F
-005F   1E85           00141                 BTFSS   PORTA, 5      ; Check Z and C ALU outputs in PortA
-0060   1422           00142                 BSF             MYSTATUS, 0
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  4
+0052   0EA6           00121                         SWAPF   OFFSET
+                      00122                         
+0053   2???           00123                         CALL    readdata
+0054   0086           00124                         MOVWF   PORTB
+0055   0E86           00125                         SWAPF   PORTB, F
+                      00126                 ; Grab C title,
+0056   0821           00127                         MOVF    INS2, W
+0057   390F           00128                         ANDLW   0x0F
+0058   00A6           00129                         MOVWF   OFFSET
+                      00130 
+                      00131         ;Read C bucket and put in bottom of Port B (to ALU)
+0059   2???           00132                         CALL    readdata
+005A   0686           00133                         XORWF   PORTB, F        ; now port B is full with buckets
+                      00134 
+                      00135         ; Set 3 mode bits on port d and send to ALU
+005B   3007           00136                 MOVLW   0x07     
+005C   0087           00137                 MOVWF   PORTC
+                      00138 
+                      00139         ; Clear Z and C bits of MyStatus Register               
+005D   30FC           00140                 MOVLW   0xFC          
+005E   05A2           00141                 ANDWF   MYSTATUS, F
+005F   1E85           00142                 BTFSS   PORTA, 5      ; Check Z and C ALU outputs in PortA
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0061   1F05           00143                 BTFSS   PORTA, 6
-0062   14A2           00144                 BSF             MYSTATUS, 1     
-                      00145 
-                      00146         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
-0063   0820           00147                         MOVF    INS1, W         
-0064   390F           00148                         ANDLW   0x0F
-0065   00A5           00149                         MOVWF   OFFSET
-0066   0805           00150                         MOVF    PORTA, W
-0067   00A4           00151                         MOVWF   DATAWRITE
-0068   2???           00152                         CALL    writedata
-                      00153 
-0069   2???           00154         GOTO    LSTART
-                      00155         
-006A                  00156 L2      ; SUB
-006A   0821           00157                         MOVF    INS2, W 
-006B   39F0           00158                         ANDLW   0xF0
-006C   00A5           00159                         MOVWF   OFFSET
+0060   1422           00143                 BSF             MYSTATUS, 0
+0061   1F05           00144                 BTFSS   PORTA, 6
+0062   14A2           00145                 BSF             MYSTATUS, 1     
+                      00146 
+                      00147         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
+0063   0820           00148                         MOVF    INS1, W         
+0064   390F           00149                         ANDLW   0x0F
+0065   00A6           00150                         MOVWF   OFFSET
+0066   0805           00151                         MOVF    PORTA, W
+0067   00A5           00152                         MOVWF   DATAWRITE
+0068   2???           00153                         CALL    writedata
+                      00154 
+0069   2???           00155         GOTO    LSTART
+                      00156         
+006A                  00157 L2      ; SUB
+006A   0821           00158                         MOVF    INS2, W 
+006B   39F0           00159                         ANDLW   0xF0
+006C   00A6           00160                         MOVWF   OFFSET
 Message[305]: Using default destination of 1 (file).
-006D   0EA5           00160                         SWAPF   OFFSET
-                      00161                         
-006E   2???           00162                         CALL    readdata
-006F   0086           00163                         MOVWF   PORTB
-0070   0E86           00164                         SWAPF   PORTB, F
-                      00165                 ; Grab C title,
-0071   0821           00166                         MOVF    INS2, W
-0072   390F           00167                         ANDLW   0x0F
-0073   00A5           00168                         MOVWF   OFFSET
-                      00169 
-                      00170         ;Read C bucket and put in bottom of Port B (to ALU)
-0074   2???           00171                         CALL    readdata
-0075   0686           00172                         XORWF   PORTB, F        ; now port B is full with buckets
-                      00173 
-                      00174         ; Set 3 mode bits on port d and send to ALU
-0076   3006           00175                 MOVLW   0x06     
-0077   0087           00176                 MOVWF   PORTC
-                      00177 
-                      00178         ; Clear Z and C bits of MyStatus Register               
-0078   30FC           00179                 MOVLW   0xFC          
-0079   05A2           00180                 ANDWF   MYSTATUS, F
-007A   1E85           00181                 BTFSS   PORTA, 5      ; Check Z and C ALU outputs in PortA
-007B   1422           00182                 BSF             MYSTATUS, 0
-007C   1F05           00183                 BTFSS   PORTA, 6
-007D   14A2           00184                 BSF             MYSTATUS, 1     
-                      00185 
-007E   0820           00186                         MOVF    INS1, W         
-007F   390F           00187                         ANDLW   0x0F
-0080   00A5           00188                         MOVWF   OFFSET
-0081   0805           00189                         MOVF    PORTA, W
-0082   00A4           00190                         MOVWF   DATAWRITE
-0083   2???           00191                         CALL    writedata
-                      00192 
-0084   2???           00193         GOTO    LSTART
-                      00194 
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  5
+006D   0EA6           00161                         SWAPF   OFFSET
+                      00162                         
+006E   2???           00163                         CALL    readdata
+006F   0086           00164                         MOVWF   PORTB
+0070   0E86           00165                         SWAPF   PORTB, F
+                      00166                 ; Grab C title,
+0071   0821           00167                         MOVF    INS2, W
+0072   390F           00168                         ANDLW   0x0F
+0073   00A6           00169                         MOVWF   OFFSET
+                      00170 
+                      00171         ;Read C bucket and put in bottom of Port B (to ALU)
+0074   2???           00172                         CALL    readdata
+0075   0686           00173                         XORWF   PORTB, F        ; now port B is full with buckets
+                      00174 
+                      00175         ; Set 3 mode bits on port d and send to ALU
+0076   3006           00176                 MOVLW   0x06     
+0077   0087           00177                 MOVWF   PORTC
+                      00178 
+                      00179         ; Clear Z and C bits of MyStatus Register               
+0078   30FC           00180                 MOVLW   0xFC          
+0079   05A2           00181                 ANDWF   MYSTATUS, F
+007A   1E85           00182                 BTFSS   PORTA, 5      ; Check Z and C ALU outputs in PortA
+007B   1422           00183                 BSF             MYSTATUS, 0
+007C   1F05           00184                 BTFSS   PORTA, 6
+007D   14A2           00185                 BSF             MYSTATUS, 1     
+                      00186 
+007E   0820           00187                         MOVF    INS1, W         
+007F   390F           00188                         ANDLW   0x0F
+0080   00A6           00189                         MOVWF   OFFSET
+0081   0805           00190                         MOVF    PORTA, W
+0082   00A5           00191                         MOVWF   DATAWRITE
+0083   2???           00192                         CALL    writedata
+                      00193 
+0084   2???           00194         GOTO    LSTART
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0085                  00195 L3      ; AND
-0085   0821           00196                         MOVF    INS2, W 
-0086   39F0           00197                         ANDLW   0xF0
-0087   00A5           00198                         MOVWF   OFFSET
+                      00195 
+0085                  00196 L3      ; AND
+0085   0821           00197                         MOVF    INS2, W 
+0086   39F0           00198                         ANDLW   0xF0
+0087   00A6           00199                         MOVWF   OFFSET
 Message[305]: Using default destination of 1 (file).
-0088   0EA5           00199                         SWAPF   OFFSET
-                      00200                         
-0089   2???           00201                         CALL    readdata
-008A   0086           00202                         MOVWF   PORTB
-008B   0E86           00203                         SWAPF   PORTB, F
-                      00204                 ; Grab C title,
-008C   0821           00205                         MOVF    INS2, W
-008D   390F           00206                         ANDLW   0x0F
-008E   00A5           00207                         MOVWF   OFFSET
-                      00208 
-                      00209         ;Read C bucket and put in bottom of Port B (to ALU)
-008F   2???           00210                         CALL    readdata
-0090   0686           00211                         XORWF   PORTB, F        ; now port B is full with buckets
-                      00212 
-                      00213         ; Set 3 mode bits on port d and send to ALU
-0091   3000           00214                 MOVLW   0x00     
-0092   0087           00215                 MOVWF   PORTC
-                      00216 
-                      00217         ; Clear Z and C bits of MyStatus Register               
-0093   30FD           00218                 MOVLW   0xFD          
-0094   05A2           00219                 ANDWF   MYSTATUS, F
-0095   1F05           00220                 BTFSS   PORTA, 6
-0096   14A2           00221                 BSF             MYSTATUS, 1     
-                      00222 
-0097   0820           00223                         MOVF    INS1, W         
-0098   390F           00224                         ANDLW   0x0F
-0099   00A5           00225                         MOVWF   OFFSET
-009A   0805           00226                         MOVF    PORTA, W
-009B   00A4           00227                         MOVWF   DATAWRITE
-009C   2???           00228                         CALL    writedata
-                      00229 
-009D   2???           00230         GOTO    LSTART
-                      00231 
-009E                  00232 L4      ; OR
-009E   0821           00233                         MOVF    INS2, W 
-009F   39F0           00234                         ANDLW   0xF0
-00A0   00A5           00235                         MOVWF   OFFSET
+0088   0EA6           00200                         SWAPF   OFFSET
+                      00201                         
+0089   2???           00202                         CALL    readdata
+008A   0086           00203                         MOVWF   PORTB
+008B   0E86           00204                         SWAPF   PORTB, F
+                      00205                 ; Grab C title,
+008C   0821           00206                         MOVF    INS2, W
+008D   390F           00207                         ANDLW   0x0F
+008E   00A6           00208                         MOVWF   OFFSET
+                      00209 
+                      00210         ;Read C bucket and put in bottom of Port B (to ALU)
+008F   2???           00211                         CALL    readdata
+0090   0686           00212                         XORWF   PORTB, F        ; now port B is full with buckets
+                      00213 
+                      00214         ; Set 3 mode bits on port d and send to ALU
+0091   3000           00215                 MOVLW   0x00     
+0092   0087           00216                 MOVWF   PORTC
+                      00217 
+                      00218         ; Clear Z and C bits of MyStatus Register               
+0093   30FD           00219                 MOVLW   0xFD          
+0094   05A2           00220                 ANDWF   MYSTATUS, F
+0095   1F05           00221                 BTFSS   PORTA, 6
+0096   14A2           00222                 BSF             MYSTATUS, 1     
+                      00223 
+0097   0820           00224                         MOVF    INS1, W         
+0098   390F           00225                         ANDLW   0x0F
+0099   00A6           00226                         MOVWF   OFFSET
+009A   0805           00227                         MOVF    PORTA, W
+009B   00A5           00228                         MOVWF   DATAWRITE
+009C   2???           00229                         CALL    writedata
+                      00230 
+009D   2???           00231         GOTO    LSTART
+                      00232 
+009E                  00233 L4      ; OR
+009E   0821           00234                         MOVF    INS2, W 
+009F   39F0           00235                         ANDLW   0xF0
+00A0   00A6           00236                         MOVWF   OFFSET
 Message[305]: Using default destination of 1 (file).
-00A1   0EA5           00236                         SWAPF   OFFSET
-                      00237                         
-00A2   2???           00238                         CALL    readdata
-00A3   0086           00239                         MOVWF   PORTB
-00A4   0E86           00240                         SWAPF   PORTB, F
-                      00241                 ; Grab C title,
-00A5   0821           00242                         MOVF    INS2, W
-00A6   390F           00243                         ANDLW   0x0F
-00A7   00A5           00244                         MOVWF   OFFSET
-                      00245 
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  6
+00A1   0EA6           00237                         SWAPF   OFFSET
+                      00238                         
+00A2   2???           00239                         CALL    readdata
+00A3   0086           00240                         MOVWF   PORTB
+00A4   0E86           00241                         SWAPF   PORTB, F
+                      00242                 ; Grab C title,
+00A5   0821           00243                         MOVF    INS2, W
+00A6   390F           00244                         ANDLW   0x0F
+00A7   00A6           00245                         MOVWF   OFFSET
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00246         ;Read C bucket and put in bottom of Port B (to ALU)
-00A8   2???           00247                         CALL    readdata
-00A9   0686           00248                         XORWF   PORTB, F        ; now port B is full with buckets
-                      00249 
-                      00250         ; Set 3 mode bits on port d and send to ALU
-00AA   3001           00251                 MOVLW   0x01     
-00AB   0087           00252                 MOVWF   PORTC
-                      00253 
-                      00254         ; Clear Z and C bits of MyStatus Register               
-00AC   30FD           00255                 MOVLW   0xFD          
-00AD   05A2           00256                 ANDWF   MYSTATUS, F
-00AE   1F05           00257                 BTFSS   PORTA, 6
-00AF   14A2           00258                 BSF             MYSTATUS, 1     
-                      00259 
-00B0   0820           00260                         MOVF    INS1, W         
-00B1   390F           00261                         ANDLW   0x0F
-00B2   00A5           00262                         MOVWF   OFFSET
-00B3   0805           00263                         MOVF    PORTA, W
-00B4   00A4           00264                         MOVWF   DATAWRITE
-00B5   2???           00265                         CALL    writedata
-                      00266 
-00B6   2???           00267         GOTO    LSTART
-                      00268 
-00B7                  00269 L5      ; XOR
-00B7   0821           00270                         MOVF    INS2, W 
-00B8   39F0           00271                         ANDLW   0xF0
-00B9   00A5           00272                         MOVWF   OFFSET
+                      00246 
+                      00247         ;Read C bucket and put in bottom of Port B (to ALU)
+00A8   2???           00248                         CALL    readdata
+00A9   0686           00249                         XORWF   PORTB, F        ; now port B is full with buckets
+                      00250 
+                      00251         ; Set 3 mode bits on port d and send to ALU
+00AA   3001           00252                 MOVLW   0x01     
+00AB   0087           00253                 MOVWF   PORTC
+                      00254 
+                      00255         ; Clear Z and C bits of MyStatus Register               
+00AC   30FD           00256                 MOVLW   0xFD          
+00AD   05A2           00257                 ANDWF   MYSTATUS, F
+00AE   1F05           00258                 BTFSS   PORTA, 6
+00AF   14A2           00259                 BSF             MYSTATUS, 1     
+                      00260 
+00B0   0820           00261                         MOVF    INS1, W         
+00B1   390F           00262                         ANDLW   0x0F
+00B2   00A6           00263                         MOVWF   OFFSET
+00B3   0805           00264                         MOVF    PORTA, W
+00B4   00A5           00265                         MOVWF   DATAWRITE
+00B5   2???           00266                         CALL    writedata
+                      00267 
+00B6   2???           00268         GOTO    LSTART
+                      00269 
+00B7                  00270 L5      ; XOR
+00B7   0821           00271                         MOVF    INS2, W 
+00B8   39F0           00272                         ANDLW   0xF0
+00B9   00A6           00273                         MOVWF   OFFSET
 Message[305]: Using default destination of 1 (file).
-00BA   0EA5           00273                         SWAPF   OFFSET
-                      00274                         
-00BB   2???           00275                         CALL    readdata
-00BC   0086           00276                         MOVWF   PORTB
-00BD   0E86           00277                         SWAPF   PORTB, F
-                      00278                 ; Grab C title,
-00BE   0821           00279                         MOVF    INS2, W
-00BF   390F           00280                         ANDLW   0x0F
-00C0   00A5           00281                         MOVWF   OFFSET
-                      00282 
-                      00283         ;Read C bucket and put in bottom of Port B (to ALU)
-00C1   2???           00284                         CALL    readdata
-00C2   0686           00285                         XORWF   PORTB, F        ; now port B is full with buckets
-                      00286 
-                      00287         ; Set 3 mode bits on port d and send to ALU
-00C3   3002           00288                 MOVLW   0x02     
-00C4   0087           00289                 MOVWF   PORTC
-                      00290 
-                      00291         ; Clear Z and C bits of MyStatus Register               
-00C5   30FD           00292                 MOVLW   0xFD          
-00C6   05A2           00293                 ANDWF   MYSTATUS, F
-00C7   1F05           00294                 BTFSS   PORTA, 6
-00C8   14A2           00295                 BSF             MYSTATUS, 1     
-                      00296 
-00C9   0820           00297                         MOVF    INS1, W         
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  7
+00BA   0EA6           00274                         SWAPF   OFFSET
+                      00275                         
+00BB   2???           00276                         CALL    readdata
+00BC   0086           00277                         MOVWF   PORTB
+00BD   0E86           00278                         SWAPF   PORTB, F
+                      00279                 ; Grab C title,
+00BE   0821           00280                         MOVF    INS2, W
+00BF   390F           00281                         ANDLW   0x0F
+00C0   00A6           00282                         MOVWF   OFFSET
+                      00283 
+                      00284         ;Read C bucket and put in bottom of Port B (to ALU)
+00C1   2???           00285                         CALL    readdata
+00C2   0686           00286                         XORWF   PORTB, F        ; now port B is full with buckets
+                      00287 
+                      00288         ; Set 3 mode bits on port d and send to ALU
+00C3   3002           00289                 MOVLW   0x02     
+00C4   0087           00290                 MOVWF   PORTC
+                      00291 
+                      00292         ; Clear Z and C bits of MyStatus Register               
+00C5   30FD           00293                 MOVLW   0xFD          
+00C6   05A2           00294                 ANDWF   MYSTATUS, F
+00C7   1F05           00295                 BTFSS   PORTA, 6
+00C8   14A2           00296                 BSF             MYSTATUS, 1     
+                      00297 
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00CA   390F           00298                         ANDLW   0x0F
-00CB   00A5           00299                         MOVWF   OFFSET
-00CC   0805           00300                         MOVF    PORTA, W
-00CD   00A4           00301                         MOVWF   DATAWRITE
-00CE   2???           00302                         CALL    writedata
-                      00303 
-00CF   2???           00304         GOTO    LSTART
-                      00305 
-00D0                  00306 L6      ;Shift Case
-00D0   1BA1           00307                 BTFSC   INS2, 7 
-00D1   2???           00308                 GOTO    L6R             ; Right Shift
-                      00309 ; Left Shift    
-                      00310         ; Grab "B" title
-00D2   0821           00311                         MOVF    INS2, W
-00D3   390F           00312                         ANDLW   0x0F
-00D4   00A5           00313                         MOVWF   OFFSET
-00D5   0EA5           00314                         SWAPF   OFFSET, F
-00D6   2???           00315                         CALL    readdata        
-00D7   0086           00316                         MOVWF   PORTB
-00D8   0E86           00317                         SWAPF   PORTB, F
-                      00318                         
-00D9   3003           00319                         MOVLW   0x03
-00DA   0088           00320                         MOVWF   PORTD
-                      00321 
-                      00322         ; Clear C bit of MyStatus Register
-00DB   30FE           00323                 MOVLW   0xFE
-00DC   05A2           00324                 ANDWF   MYSTATUS, F
-00DD   1E85           00325                 BTFSS   PORTA, 5
-00DE   1422           00326                 BSF             MYSTATUS, 0
-                      00327         
-                      00328         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
-00DF   0820           00329                         MOVF    INS1, W         
-00E0   390F           00330                         ANDLW   0x0F
-00E1   00A5           00331                         MOVWF   OFFSET
-00E2   0805           00332                         MOVF    PORTA, W
-00E3   00A4           00333                         MOVWF   DATAWRITE
-00E4   2???           00334                         CALL    writedata
-                      00335 
-00E5   2???           00336         GOTO    LSTART
-                      00337 
+00C9   0820           00298                         MOVF    INS1, W         
+00CA   390F           00299                         ANDLW   0x0F
+00CB   00A6           00300                         MOVWF   OFFSET
+00CC   0805           00301                         MOVF    PORTA, W
+00CD   00A5           00302                         MOVWF   DATAWRITE
+00CE   2???           00303                         CALL    writedata
+                      00304 
+00CF   2???           00305         GOTO    LSTART
+                      00306 
+00D0                  00307 L6      ;Shift Case
+00D0   1BA1           00308                 BTFSC   INS2, 7 
+00D1   2???           00309                 GOTO    L6R             ; Right Shift
+                      00310 ; Left Shift    
+                      00311         ; Grab "B" title
+00D2   0821           00312                         MOVF    INS2, W
+00D3   390F           00313                         ANDLW   0x0F
+00D4   00A6           00314                         MOVWF   OFFSET
+00D5   0EA6           00315                         SWAPF   OFFSET, F
+00D6   2???           00316                         CALL    readdata        
+00D7   0086           00317                         MOVWF   PORTB
+00D8   0E86           00318                         SWAPF   PORTB, F
+                      00319                         
+00D9   3003           00320                         MOVLW   0x03
+00DA   0088           00321                         MOVWF   PORTD
+                      00322 
+                      00323         ; Clear C bit of MyStatus Register
+00DB   30FE           00324                 MOVLW   0xFE
+00DC   05A2           00325                 ANDWF   MYSTATUS, F
+00DD   1E85           00326                 BTFSS   PORTA, 5
+00DE   1422           00327                 BSF             MYSTATUS, 0
+                      00328         
+                      00329         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
+00DF   0820           00330                         MOVF    INS1, W         
+00E0   390F           00331                         ANDLW   0x0F
+00E1   00A6           00332                         MOVWF   OFFSET
+00E2   0805           00333                         MOVF    PORTA, W
+00E3   00A5           00334                         MOVWF   DATAWRITE
+00E4   2???           00335                         CALL    writedata
+                      00336 
+00E5   2???           00337         GOTO    LSTART
+                      00338 
 Warning[207]: Found label after column 1. (L6R)
-00E6                  00338         L6R
-                      00339         ; Grab "B" title, send it to SRAM
-00E6   0821           00340                         MOVF    INS2, W
-00E7   390F           00341                         ANDLW   0x0F
-00E8   00A5           00342                         MOVWF   OFFSET
-00E9   0EA5           00343                         SWAPF   OFFSET, F
-00EA   2???           00344                         CALL    readdata        
-00EB   0086           00345                         MOVWF   PORTB
-00EC   0E86           00346                         SWAPF   PORTB, F
-                      00347                         
-00ED   3004           00348                         MOVLW   0x04
-00EE   0088           00349                         MOVWF   PORTD
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  8
+00E6                  00339         L6R
+                      00340         ; Grab "B" title, send it to SRAM
+00E6   0821           00341                         MOVF    INS2, W
+00E7   390F           00342                         ANDLW   0x0F
+00E8   00A6           00343                         MOVWF   OFFSET
+00E9   0EA6           00344                         SWAPF   OFFSET, F
+00EA   2???           00345                         CALL    readdata        
+00EB   0086           00346                         MOVWF   PORTB
+00EC   0E86           00347                         SWAPF   PORTB, F
+                      00348                         
+00ED   3004           00349                         MOVLW   0x04
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00350         
-00EF   3001           00351                         MOVLW   0x01
-00F0   0089           00352                         MOVWF   PORTE
-                      00353         ; Clear C bit of MyStatus Register
-00F1   30FE           00354                 MOVLW   0xFE
-00F2   05A2           00355                 ANDWF   MYSTATUS, F
-00F3   1E85           00356                 BTFSS   PORTA, 5
-00F4   1422           00357                 BSF             MYSTATUS, 0
-                      00358         
-                      00359         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
-00F5   0820           00360                         MOVF    INS1, W         
-00F6   390F           00361                         ANDLW   0x0F
-00F7   00A5           00362                         MOVWF   OFFSET
-00F8   0805           00363                         MOVF    PORTA, W
-00F9   00A4           00364                         MOVWF   DATAWRITE
-00FA   2???           00365                         CALL    writedata
-                      00366 
-00FB   2???           00367         GOTO    LSTART
-                      00368 
-00FC                  00369 L7      ;Not Case
-                      00370         ; Grab "B" title, send it to SRAM
-00FC   0821           00371                         MOVF    INS2, W
-00FD   390F           00372                         ANDLW   0x0F
-00FE   00A5           00373                         MOVWF   OFFSET
-                      00374         ;Read "B" bucket from SRAM and put in bottom of Port B (to ALU)
-00FF   2???           00375                         CALL    readdata
-0100   0086           00376                         MOVWF   PORTB
+00EE   0088           00350                         MOVWF   PORTD
+                      00351         
+00EF   3001           00352                         MOVLW   0x01
+00F0   0089           00353                         MOVWF   PORTE
+                      00354         ; Clear C bit of MyStatus Register
+00F1   30FE           00355                 MOVLW   0xFE
+00F2   05A2           00356                 ANDWF   MYSTATUS, F
+00F3   1E85           00357                 BTFSS   PORTA, 5
+00F4   1422           00358                 BSF             MYSTATUS, 0
+                      00359         
+                      00360         ; Grab A title, send it to SRAM, while Port A is feeding in the result.
+00F5   0820           00361                         MOVF    INS1, W         
+00F6   390F           00362                         ANDLW   0x0F
+00F7   00A6           00363                         MOVWF   OFFSET
+00F8   0805           00364                         MOVF    PORTA, W
+00F9   00A5           00365                         MOVWF   DATAWRITE
+00FA   2???           00366                         CALL    writedata
+                      00367 
+00FB   2???           00368         GOTO    LSTART
+                      00369 
+00FC                  00370 L7      ;Not Case
+                      00371         ; Grab "B" title, send it to SRAM
+00FC   0821           00372                         MOVF    INS2, W
+00FD   390F           00373                         ANDLW   0x0F
+00FE   00A6           00374                         MOVWF   OFFSET
+                      00375         ;Read "B" bucket from SRAM and put in bottom of Port B (to ALU)
+00FF   2???           00376                         CALL    readdata
+0100   0086           00377                         MOVWF   PORTB
 Message[305]: Using default destination of 1 (file).
-0101   0E86           00377                         SWAPF   PORTB   
-                      00378                         
-0102   3005           00379                         MOVLW   0x05
-0103   0088           00380                         MOVWF   PORTD
-                      00381         
-                      00382         ; Clear Z bit of MyStatus Register
-0104   30FD           00383                 MOVLW   0xFD
-0105   05A2           00384                 ANDWF   MYSTATUS, F
-0106   1F05           00385                 BTFSS   PORTA, 6
-0107   14A2           00386                 BSF             MYSTATUS, 1
-                      00387         
-0108   0820           00388                         MOVF    INS1, W         
-0109   390F           00389                         ANDLW   0x0F
-010A   00A5           00390                         MOVWF   OFFSET
-010B   0805           00391                         MOVF    PORTA, W
-010C   00A4           00392                         MOVWF   DATAWRITE
-010D   2???           00393                         CALL    writedata
-                      00394 
-010E   2???           00395         GOTO    LSTART
-                      00396 
-010F                  00397 L8      ;Move Case
-                      00398         ;Clear the Z bit
-010F   30FD           00399         MOVLW   0xFD
-0110   05A2           00400         ANDWF   MYSTATUS, F
-0111   1BA1           00401         BTFSC   INS2, 7
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE  9
+0101   0E86           00378                         SWAPF   PORTB   
+                      00379                         
+0102   3005           00380                         MOVLW   0x05
+0103   0088           00381                         MOVWF   PORTD
+                      00382         
+                      00383         ; Clear Z bit of MyStatus Register
+0104   30FD           00384                 MOVLW   0xFD
+0105   05A2           00385                 ANDWF   MYSTATUS, F
+0106   1F05           00386                 BTFSS   PORTA, 6
+0107   14A2           00387                 BSF             MYSTATUS, 1
+                      00388         
+0108   0820           00389                         MOVF    INS1, W         
+0109   390F           00390                         ANDLW   0x0F
+010A   00A6           00391                         MOVWF   OFFSET
+010B   0805           00392                         MOVF    PORTA, W
+010C   00A5           00393                         MOVWF   DATAWRITE
+010D   2???           00394                         CALL    writedata
+                      00395 
+010E   2???           00396         GOTO    LSTART
+                      00397 
+010F                  00398 L8      ;Move Case
+                      00399         ;Clear the Z bit
+010F   30FD           00400         MOVLW   0xFD
+0110   05A2           00401         ANDWF   MYSTATUS, F
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0112   2???           00402         GOTO    L8b ; This is move FF
-                      00403         
-0113   0821           00404                 MOVF INS2, W
-0114   390F           00405                 ANDLW   0x0F
-0115   00A4           00406                 MOVWF   DATAWRITE
-                      00407         
-                      00408         ; set the Z bit of MyStatus Register
-0116   1D03           00409                 BTFSS   STATUS, Z
-0117   14A2           00410                 BSF             MYSTATUS, 1
-                      00411 
-0118   0820           00412                 MOVF    INS1, W         
-0119   390F           00413                 ANDLW   0x0F
-011A   00A5           00414                 MOVWF   OFFSET
-011B   2???           00415                 CALL    writedata
-                      00416                         
-011C   2???           00417         GOTO LSTART
-                      00418 
-011D                  00419 L8b     ;Move Case 1 - MOVE FF
-011D   0821           00420                 MOVF    INS2, W
-011E   390F           00421                 ANDLW   0x0F
-011F   00A5           00422                 MOVWF   OFFSET
-0120   2???           00423                 CALL    readdata
-                      00424                 
-0121   00A4           00425                 MOVWF   DATAWRITE
-                      00426 
-                      00427         ; set the Z bit of MyStatus Register
-0122   1D03           00428                 BTFSS   STATUS, Z
-0123   14A2           00429                 BSF             MYSTATUS, 1
-                      00430 
-0124   0820           00431                 MOVF    INS1, W         
-0125   390F           00432                 ANDLW   0x0F
-0126   00A5           00433                 MOVWF   OFFSET
-0127   2???           00434                 CALL    writedata
-                      00435 
-0128   2???           00436         GOTO LSTART
-                      00437 
-0129                  00438 L9      ;LOD
-                      00439         ;Clear the Z bit
-0129   30FD           00440         MOVLW   0xFD
-012A   05A2           00441         ANDWF   MYSTATUS, F
-012B   1BA1           00442         BTFSC   INS2, 7
-012C   2???           00443         GOTO    L9b     
-                      00444         
-                      00445         ;Given offset
-012D   0821           00446         MOVF    INS2, W
-012E   00A5           00447         MOVWF   OFFSET
-012F   2???           00448         CALL    readdata
-                      00449 
-                      00450         ; set the Z bit of MyStatus Register
-0130   1D03           00451         BTFSS   STATUS, Z
-0131   14A2           00452         BSF             MYSTATUS, 1
-                      00453 
-0132   00A4           00454         MOVWF   DATAWRITE
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 10
+0111   1BA1           00402         BTFSC   INS2, 7
+0112   2???           00403         GOTO    L8b ; This is move FF
+                      00404         
+0113   0821           00405                 MOVF INS2, W
+0114   390F           00406                 ANDLW   0x0F
+0115   00A5           00407                 MOVWF   DATAWRITE
+                      00408         
+                      00409         ; set the Z bit of MyStatus Register
+0116   1D03           00410                 BTFSS   STATUS, Z
+0117   14A2           00411                 BSF             MYSTATUS, 1
+                      00412 
+0118   0820           00413                 MOVF    INS1, W         
+0119   390F           00414                 ANDLW   0x0F
+011A   00A6           00415                 MOVWF   OFFSET
+011B   2???           00416                 CALL    writedata
+                      00417                         
+011C   2???           00418         GOTO LSTART
+                      00419 
+011D                  00420 L8b     ;Move Case 1 - MOVE FF
+011D   0821           00421                 MOVF    INS2, W
+011E   390F           00422                 ANDLW   0x0F
+011F   00A6           00423                 MOVWF   OFFSET
+0120   2???           00424                 CALL    readdata
+                      00425                 
+0121   00A5           00426                 MOVWF   DATAWRITE
+                      00427 
+                      00428         ; set the Z bit of MyStatus Register
+0122   1D03           00429                 BTFSS   STATUS, Z
+0123   14A2           00430                 BSF             MYSTATUS, 1
+                      00431 
+0124   0820           00432                 MOVF    INS1, W         
+0125   390F           00433                 ANDLW   0x0F
+0126   00A6           00434                 MOVWF   OFFSET
+0127   2???           00435                 CALL    writedata
+                      00436 
+0128   2???           00437         GOTO LSTART
+                      00438 
+0129                  00439 L9      ;LOD
+                      00440         ;Clear the Z bit
+0129   30FD           00441         MOVLW   0xFD
+012A   05A2           00442         ANDWF   MYSTATUS, F
+012B   1BA1           00443         BTFSC   INS2, 7
+012C   2???           00444         GOTO    L9b     
+                      00445         
+                      00446         ;Given offset
+012D   0821           00447         MOVF    INS2, W
+012E   00A6           00448         MOVWF   OFFSET
+012F   2???           00449         CALL    readdata
+                      00450 
+                      00451         ; set the Z bit of MyStatus Register
+0130   1D03           00452         BTFSS   STATUS, Z
+0131   14A2           00453         BSF             MYSTATUS, 1
+                      00454 
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0133   0820           00455         MOVF    INS1, W
-0134   390F           00456         ANDLW   0x0F
-0135   00A5           00457         MOVWF   OFFSET
-0136   2???           00458         CALL    writedata
-0137   2???           00459         GOTO    LSTART
-                      00460 
-0138                  00461 L9b     ;Given Rb as offset
-0138   0821           00462         MOVF    INS2, W
-0139   390F           00463         ANDLW   0x0F
-013A   00A5           00464         MOVWF   OFFSET
-013B   2???           00465         CALL    readdata
-013C   00A6           00466         MOVWF   OFFTMP
-013D   0EA6           00467         SWAPF   OFFTMP, F
-013E   0AA5           00468         INCF    OFFSET, F
-013F   2???           00469         CALL    readdata
-0140   0626           00470         XORWF   OFFTMP, W
-0141   00A5           00471         MOVWF   OFFSET
-0142   2???           00472         CALL    readdata
-                      00473 
-                      00474         ; set the Z bit of MyStatus Register
-0143   1D03           00475         BTFSS   STATUS, Z
-0144   14A2           00476         BSF             MYSTATUS, 1
-                      00477 
-0145   00A4           00478         MOVWF   DATAWRITE
-0146   0820           00479         MOVF    INS1, W
-0147   390F           00480         ANDLW   0x0F
-0148   00A5           00481         MOVWF   OFFSET
-0149   2???           00482         CALL    writedata
-                      00483         
-014A   2???           00484         GOTO LSTART
-                      00485 
-014B                  00486 L10     ;STO
-                      00487         ;Clear the Z bit
-014B   30FD           00488         MOVLW   0xFD
-014C   05A2           00489         ANDWF   MYSTATUS, F
-                      00490 
-014D   1BA1           00491         BTFSC   INS2, 7
-014E   2???           00492         GOTO    L10b ; This is from Rb
-                      00493         
-014F   0820           00494         MOVF    INS1, W
-0150   390F           00495         ANDLW   0x0F
-0151   00A5           00496         MOVWF   OFFSET
-0152   2???           00497         CALL    readdata
-0153   00A4           00498         MOVWF   DATAWRITE
-                      00499         
-                      00500         ; set the Z bit of MyStatus Register
-0154   1D03           00501         BTFSS   STATUS, Z
-0155   14A2           00502         BSF             MYSTATUS, 1
-                      00503         
-0156   0821           00504         MOVF    INS2, W
-0157   00A5           00505         MOVWF   OFFSET
-0158   2???           00506         CALL    writedata
-                      00507 
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 11
+0132   00A5           00455         MOVWF   DATAWRITE
+0133   0820           00456         MOVF    INS1, W
+0134   390F           00457         ANDLW   0x0F
+0135   00A6           00458         MOVWF   OFFSET
+0136   2???           00459         CALL    writedata
+0137   2???           00460         GOTO    LSTART
+                      00461 
+0138                  00462 L9b     ;Given Rb as offset
+0138   0821           00463         MOVF    INS2, W
+0139   390F           00464         ANDLW   0x0F
+013A   00A6           00465         MOVWF   OFFSET
+013B   2???           00466         CALL    readdata
+013C   00A7           00467         MOVWF   OFFTMP
+013D   0EA7           00468         SWAPF   OFFTMP, F
+013E   0AA6           00469         INCF    OFFSET, F
+013F   2???           00470         CALL    readdata
+0140   0627           00471         XORWF   OFFTMP, W
+0141   00A6           00472         MOVWF   OFFSET
+0142   2???           00473         CALL    readdata
+                      00474 
+                      00475         ; set the Z bit of MyStatus Register
+0143   1D03           00476         BTFSS   STATUS, Z
+0144   14A2           00477         BSF             MYSTATUS, 1
+                      00478 
+0145   00A5           00479         MOVWF   DATAWRITE
+0146   0820           00480         MOVF    INS1, W
+0147   390F           00481         ANDLW   0x0F
+0148   00A6           00482         MOVWF   OFFSET
+0149   2???           00483         CALL    writedata
+                      00484         
+014A   2???           00485         GOTO LSTART
+                      00486 
+014B                  00487 L10     ;STO
+                      00488         ;Clear the Z bit
+014B   30FD           00489         MOVLW   0xFD
+014C   05A2           00490         ANDWF   MYSTATUS, F
+                      00491 
+014D   1BA1           00492         BTFSC   INS2, 7
+014E   2???           00493         GOTO    L10b ; This is from Rb
+                      00494         
+014F   0820           00495         MOVF    INS1, W
+0150   390F           00496         ANDLW   0x0F
+0151   00A6           00497         MOVWF   OFFSET
+0152   2???           00498         CALL    readdata
+0153   00A5           00499         MOVWF   DATAWRITE
+                      00500         
+                      00501         ; set the Z bit of MyStatus Register
+0154   1D03           00502         BTFSS   STATUS, Z
+0155   14A2           00503         BSF             MYSTATUS, 1
+                      00504         
+0156   0821           00505         MOVF    INS2, W
+0157   00A6           00506         MOVWF   OFFSET
+0158   2???           00507         CALL    writedata
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0159   2???           00508         GOTO    LSTART
-                      00509         
-015A                  00510 L10b
-015A   0820           00511         MOVF    INS1, W
-015B   390F           00512         ANDLW   0x0F
-015C   00A5           00513         MOVWF   OFFSET
-015D   2???           00514         CALL    readdata
-015E   00A4           00515         MOVWF   DATAWRITE
-                      00516 
-                      00517         ; set the Z bit of MyStatus Register
-015F   1D03           00518         BTFSS   STATUS, Z
-0160   14A2           00519         BSF             MYSTATUS, 1
-                      00520 
-0161   0821           00521         MOVF    INS2, W
-0162   390F           00522         ANDLW   0x0F
-0163   00A5           00523         MOVWF   OFFSET
-0164   2???           00524         CALL    readdata
-0165   00A6           00525         MOVWF   OFFTMP
-0166   0EA6           00526         SWAPF   OFFTMP, F
-0167   0AA5           00527         INCF    OFFSET, F
-0168   2???           00528         CALL    readdata
-0169   0626           00529         XORWF   OFFTMP, W
-016A   00A5           00530         MOVWF   OFFSET
-016B   2???           00531         CALL    writedata
-                      00532 
-016C   2???           00533         GOTO    LSTART
-                      00534 
-016D                  00535 L11     ;TSC/TSS        
-                      00536         ;Find out what bb is
-016D   0821           00537         MOVF    INS2, W
-016E   3903           00538         ANDLW   0x03
-016F   00A8           00539         MOVWF   BB
-                      00540 
-0170   0820           00541         MOVF    INS1, W         
-0171   390F           00542         ANDLW   0x0F
-0172   00A5           00543         MOVWF   OFFSET
-0173   2???           00544         CALL    readdata
-                      00545         
-0174   00A7           00546         MOVWF   DATATMP
-                      00547         
-0175   1BA1           00548         BTFSC   INS2, 7
-0176   2???           00549         GOTO    L11b ; This is TSS
-                      00550 
+                      00508 
+0159   2???           00509         GOTO    LSTART
+                      00510         
+015A                  00511 L10b
+015A   0820           00512         MOVF    INS1, W
+015B   390F           00513         ANDLW   0x0F
+015C   00A6           00514         MOVWF   OFFSET
+015D   2???           00515         CALL    readdata
+015E   00A5           00516         MOVWF   DATAWRITE
+                      00517 
+                      00518         ; set the Z bit of MyStatus Register
+015F   1D03           00519         BTFSS   STATUS, Z
+0160   14A2           00520         BSF             MYSTATUS, 1
+                      00521 
+0161   0821           00522         MOVF    INS2, W
+0162   390F           00523         ANDLW   0x0F
+0163   00A6           00524         MOVWF   OFFSET
+0164   2???           00525         CALL    readdata
+0165   00A7           00526         MOVWF   OFFTMP
+0166   0EA7           00527         SWAPF   OFFTMP, F
+0167   0AA6           00528         INCF    OFFSET, F
+0168   2???           00529         CALL    readdata
+0169   0627           00530         XORWF   OFFTMP, W
+016A   00A6           00531         MOVWF   OFFSET
+016B   2???           00532         CALL    writedata
+                      00533 
+016C   2???           00534         GOTO    LSTART
+                      00535 
+016D                  00536 L11     ;TSC/TSS        
+                      00537         ;Find out what bb is
+016D   0821           00538         MOVF    INS2, W
+016E   3903           00539         ANDLW   0x03
+016F   00A9           00540         MOVWF   BB
+                      00541 
+0170   0820           00542         MOVF    INS1, W         
+0171   390F           00543         ANDLW   0x0F
+0172   00A6           00544         MOVWF   OFFSET
+0173   2???           00545         CALL    readdata
+                      00546         
+0174   00A8           00547         MOVWF   DATATMP
+                      00548         
+0175   1BA1           00549         BTFSC   INS2, 7
+0176   2???           00550         GOTO    L11b ; This is TSS
+                      00551 
 Warning[202]: Argument out of range.  Least significant bits used.
-0177   1C27           00551         BTFSS   DATATMP, BB
-0178   0AA3           00552         INCF    PC, F
-0179   2???           00553         GOTO    LSTART  
-                      00554 
-017A                  00555 L11b
+0177   1CA8           00552         BTFSS   DATATMP, BB
+0178   0AA4           00553         INCF    PC, F
+0179   2???           00554         GOTO    LSTART  
+                      00555 
+017A                  00556 L11b
 Warning[202]: Argument out of range.  Least significant bits used.
-017A   1827           00556         BTFSC   DATATMP, BB
-017B   0AA3           00557         INCF    PC, F
-017C   2???           00558         GOTO    LSTART  
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 12
+017A   18A8           00557         BTFSC   DATATMP, BB
+017B   0AA4           00558         INCF    PC, F
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00559 
-017D                  00560 L12     ;Jump
-017D   19A0           00561         BTFSC   INS1, 3
-017E   2???           00562         GOTO    L12b ; This is Jump based on Rb
-                      00563         
-017F   0821           00564         MOVF    INS2, W
-0180   00A3           00565         MOVWF   PC
-0181   2???           00566         GOTO    LJMP
-                      00567 
-0182                  00568 L12b
-                      00569         ; Grab A title, send it to SRAM
-0182   0821           00570         MOVF    INS2, W         
-0183   390F           00571         ANDLW   0x0F
-0184   00A5           00572         MOVWF   OFFSET
-0185   2???           00573         CALL    readdata
-0186   00A3           00574         MOVWF   PC
-0187   0EA3           00575         SWAPF   PC, F
-0188   0AA5           00576         INCF    OFFSET, F
-0189   2???           00577         CALL    readdata
-018A   06A3           00578         XORWF   PC, F
-018B   2???           00579         GOTO    LJMP
-                      00580 
-018C                  00581 L13     
-                      00582         ;JSR
-018C   0A23           00583         INCF    PC, W
-018D   00A9           00584         MOVWF   TOS
-                      00585         
-018E   19A0           00586         BTFSC   INS1, 3
-018F   2???           00587         GOTO    L13b ; This is JSR to Ra
-                      00588 
-                      00589         ; This is JSR to literal k
-0190   0821           00590         MOVF    INS2, W
-0191   00A3           00591         MOVWF   PC
-0192   2???           00592         GOTO    LJMP
-                      00593 
-0193                  00594 L13b
-0193   0821           00595         MOVF    INS2, W         
-0194   390F           00596         ANDLW   0x0F
-0195   00A5           00597         MOVWF   OFFSET
-0196   2???           00598         CALL    readdata
-0197   00A3           00599         MOVWF   PC
-0198   0EA3           00600         SWAPF   PC, F
-0199   0AA5           00601         INCF    OFFSET, F
-019A   2???           00602         CALL    readdata
-019B   06A3           00603         XORWF   PC, F
-019C   2???           00604         GOTO    LJMP
-                      00605 
-019D                  00606 L14     
-019D   0829           00607         MOVF    TOS, W
-019E   00A3           00608         MOVWF   PC
-019F   2???           00609         GOTO    LJMP
-                      00610 
+017C   2???           00559         GOTO    LSTART  
+                      00560 
+017D                  00561 L12     ;Jump
+017D   19A0           00562         BTFSC   INS1, 3
+017E   2???           00563         GOTO    L12b ; This is Jump based on Rb
+                      00564         
+017F   0821           00565         MOVF    INS2, W
+0180   00A4           00566         MOVWF   PC
+0181   2???           00567         GOTO    LJMP
+                      00568 
+0182                  00569 L12b
+                      00570         ; Grab A title, send it to SRAM
+0182   0821           00571         MOVF    INS2, W         
+0183   390F           00572         ANDLW   0x0F
+0184   00A6           00573         MOVWF   OFFSET
+0185   2???           00574         CALL    readdata
+0186   00A4           00575         MOVWF   PC
+0187   0EA4           00576         SWAPF   PC, F
+0188   0AA6           00577         INCF    OFFSET, F
+0189   2???           00578         CALL    readdata
+018A   06A4           00579         XORWF   PC, F
+018B   2???           00580         GOTO    LJMP
+                      00581 
+018C                  00582 L13     
+                      00583         ;JSR
+018C   0A24           00584         INCF    PC, W
+018D   00AA           00585         MOVWF   TOS
+                      00586         
+018E   19A0           00587         BTFSC   INS1, 3
+018F   2???           00588         GOTO    L13b ; This is JSR to Ra
+                      00589 
+                      00590         ; This is JSR to literal k
+0190   0821           00591         MOVF    INS2, W
+0191   00A4           00592         MOVWF   PC
+0192   2???           00593         GOTO    LJMP
+                      00594 
+0193                  00595 L13b
+0193   0821           00596         MOVF    INS2, W         
+0194   390F           00597         ANDLW   0x0F
+0195   00A6           00598         MOVWF   OFFSET
+0196   2???           00599         CALL    readdata
+0197   00A4           00600         MOVWF   PC
+0198   0EA4           00601         SWAPF   PC, F
+0199   0AA6           00602         INCF    OFFSET, F
+019A   2???           00603         CALL    readdata
+019B   06A4           00604         XORWF   PC, F
+019C   2???           00605         GOTO    LJMP
+                      00606 
+019D                  00607 L14     
+019D   082A           00608         MOVF    TOS, W
+019E   00A4           00609         MOVWF   PC
+019F   2???           00610         GOTO    LJMP
                       00611 
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 13
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00612         ORG 0x200       
-0200                  00613 writedata:
-0200   30A0           00614         movlw   0xA0
-0201   0725           00615         addwf   OFFSET, W
-0202   1683           00616         bsf             STATUS, RP0     ; Bank 1
-0203   0084           00617         movwf   FSR
-0204   1283           00618         bcf             STATUS, RP0     ; Bank 0
-0205   0824           00619         movf    DATAWRITE, W
-0206   1683           00620         bsf             STATUS, RP0     ; Bank 1
-0207   0080           00621         MOVWF   INDF
-0208   1283           00622         bcf     STATUS, RP0
-0209   0008           00623         return
-                      00624 
-020A                  00625 readdata:
-020A   30A0           00626         MOVLW   0xA0
-020B   0725           00627         ADDWF   OFFSET, W
-020C   1683           00628         BSF             STATUS, RP0     ; Bank 1
-020D   0084           00629         MOVWF   FSR
-020E   0800           00630         MOVF    INDF, W
-020F   1283           00631         BCF             STATUS, RP0     ; Bank 0
-0210   0008           00632         RETURN
-                      00633 
-0211                  00634 readins:
-0211   1003           00635         BCF             STATUS, C
-0212   0D23           00636         RLF             PC, W;
-0213   1703           00637         BSF     STATUS, RP1 ;
-0214   1283           00638         BCF     STATUS, RP0 ;Bank 2
+                      00612 
+                      00613         ORG 0x200       
+0200                  00614 writedata:
+0200   0823           00615         MOVF    BANKSELECT, W
+0201   3A00           00616         XORLW   0x00
+0202   1903           00617         BTFSC   STATUS, Z
+0203   2???           00618         GOTO    writeoutput
+                      00619 
+0204   30A0           00620         movlw   0xA0
+0205   0726           00621         addwf   OFFSET, W
+0206   1683           00622         bsf             STATUS, RP0     ; Bank 1
+0207   0084           00623         movwf   FSR
+0208   1283           00624         bcf             STATUS, RP0     ; Bank 0
+0209   0825           00625         movf    DATAWRITE, W
+020A   1683           00626         bsf             STATUS, RP0     ; Bank 1
+020B   0080           00627         MOVWF   INDF
+020C   1283           00628         bcf     STATUS, RP0
+020D   0008           00629         return
+                      00630 
+020E                  00631 readdata:
+020E   0823           00632         MOVF    BANKSELECT, W
+020F   3A00           00633         XORLW   0x00
+0210   1903           00634         BTFSC   STATUS, Z
+0211   2???           00635         GOTO    readinput
+                      00636 
+0212   30A0           00637         MOVLW   0xA0
+0213   0726           00638         ADDWF   OFFSET, W
+0214   1683           00639         BSF             STATUS, RP0     ; Bank 1
+0215   0084           00640         MOVWF   FSR
+0216   0800           00641         MOVF    INDF, W
+0217   1283           00642         BCF             STATUS, RP0     ; Bank 0
+0218   0008           00643         RETURN
+                      00644 
+0219                  00645 writeoutput:
+0219   1683           00646         BSF             STATUS, RP0     
+021A   30FF           00647         MOVLW   0xFF
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0215   008D           00639         MOVWF   EEADR ;to read from
-0216   1683           00640         BSF     STATUS, RP0 ;Bank 3
+021B   0088           00648         MOVWF   TRISD
+021C   1283           00649         BCF             STATUS, RP0
+021D   0825           00650         MOVF    DATAWRITE, W
+021E   0088           00651         MOVWF   PORTD
+021F   0008           00652         RETURN
+                      00653 
+0220                  00654 readinput:
+0220   1683           00655         BSF             STATUS, RP0     
+0221   30FF           00656         MOVLW   0xFF
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0217   138C           00641         BCF     EECON1, EEPGD ;Point to Data memory
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0218   140C           00642         BSF     EECON1, RD ;Start read operation
-0219   1283           00643         BCF     STATUS, RP0 ;Bank 2
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-021A   080C           00644         MOVF    EEDATA, W ;
-021B   1303           00645         BCF             STATUS, RP1
-021C   00A0           00646         MOVWF   INS1
-                      00647         
-021D   1703           00648         BSF     STATUS, RP1
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-021E   0A8D           00649         INCF    EEADR, F ;to read from
-021F   1683           00650         BSF     STATUS, RP0 ;Bank 3
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0220   138C           00651         BCF     EECON1, EEPGD ;Point to Data memory
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0221   140C           00652         BSF     EECON1, RD ;Start read operation
-0222   1283           00653         BCF     STATUS, RP0 ;Bank 2
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0223   080C           00654         MOVF    EEDATA, W ;W = EEDATA
-0224   1303           00655         BCF             STATUS, RP1
-0225   00A1           00656         MOVWF   INS2
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 14
+0222   0088           00657         MOVWF   TRISD
+0223   1283           00658         BCF             STATUS, RP0
+                      00659 
+0224   0808           00660         MOVF    PORTD, W
+0225   0008           00661         RETURN
+                      00662 
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 14
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0226   0008           00657         RETURN
+0226                  00663 readins:
+0226   1003           00664         BCF             STATUS, C       ;we don't care. we have our own status register
+0227   0D24           00665         RLF             PC, W;
+0228   1703           00666         BSF     STATUS, RP1 ;
+0229   1283           00667         BCF     STATUS, RP0 ;Bank 2
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+022A   008D           00668         MOVWF   EEADR ;to read from
+022B   1683           00669         BSF     STATUS, RP0 ;Bank 3
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+022C   138C           00670         BCF     EECON1, EEPGD ;Point to Data memory
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+022D   140C           00671         BSF     EECON1, RD ;Start read operation
+022E   1283           00672         BCF     STATUS, RP0 ;Bank 2
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+022F   080C           00673         MOVF    EEDATA, W ;
+0230   1303           00674         BCF             STATUS, RP1
+0231   00A0           00675         MOVWF   INS1
+                      00676         
+0232   1703           00677         BSF     STATUS, RP1
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0233   0A8D           00678         INCF    EEADR, F ;to read from
+0234   1683           00679         BSF     STATUS, RP0 ;Bank 3
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0235   138C           00680         BCF     EECON1, EEPGD ;Point to Data memory
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0236   140C           00681         BSF     EECON1, RD ;Start read operation
+0237   1283           00682         BCF     STATUS, RP0 ;Bank 2
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0238   080C           00683         MOVF    EEDATA, W ;W = EEDATA
+0239   1303           00684         BCF             STATUS, RP1
+023A   00A1           00685         MOVWF   INS2
+023B   0008           00686         RETURN
 Warning[205]: Found directive in column 1. (END)
-3F72                  00658 END
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 15
+3F72                  00687 END
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 15
 
 
 SYMBOL TABLE
@@ -795,7 +826,8 @@ ADIF                              00000006
 ADON                              00000000
 ADRESH                            0000001E
 ADRESL                            0000009E
-BB                                00000028
+BANKSELECT                        00000023
+BB                                00000029
 BCLIE                             00000003
 BCLIF                             00000003
 BF                                00000000
@@ -832,13 +864,13 @@ CCP1Y                             00000004
 CCP2CON                           0000001D
 CCP2IE                            00000000
 CCP2IF                            00000000
-CCP2M0                            00000000
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 16
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CCP2M0                            00000000
 CCP2M1                            00000001
 CCP2M2                            00000002
 CCP2M3                            00000003
@@ -873,8 +905,8 @@ CVREN                             00000007
 CVROE                             00000006
 CVRR                              00000005
 D                                 00000005
-DATATMP                           00000027
-DATAWRITE                         00000024
+DATATMP                           00000028
+DATAWRITE                         00000025
 DATA_ADDRESS                      00000005
 DC                                00000001
 D_A                               00000005
@@ -891,13 +923,13 @@ EEPGD                             00000007
 F                                 00000001
 FERR                              00000002
 FSR                               00000004
-GCEN                              00000007
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 17
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+GCEN                              00000007
 GIE                               00000007
 GO                                00000002
 GO_DONE                           00000002
@@ -950,24 +982,24 @@ NOT_PD                            00000003
 NOT_POR                           00000001
 NOT_RBPU                          00000007
 NOT_RC8                           00000006
-NOT_T1SYNC                        00000002
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 18
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+NOT_T1SYNC                        00000002
 NOT_TO                            00000004
 NOT_TX8                           00000006
 NOT_W                             00000002
 NOT_WRITE                         00000002
 OBF                               00000006
 OERR                              00000001
-OFFSET                            00000025
-OFFTMP                            00000026
+OFFSET                            00000026
+OFFTMP                            00000027
 OPTION_REG                        00000081
 P                                 00000004
-PC                                00000023
+PC                                00000024
 PCFG0                             00000000
 PCFG1                             00000001
 PCFG2                             00000002
@@ -1009,13 +1041,13 @@ RB4                               00000004
 RB5                               00000005
 RB6                               00000006
 RB7                               00000007
-RBIE                              00000003
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 19
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RBIE                              00000003
 RBIF                              00000000
 RC0                               00000000
 RC1                               00000001
@@ -1068,13 +1100,13 @@ SSPIE                             00000003
 SSPIF                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
-SSPM2                             00000002
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 20
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
 SSPSTAT                           00000094
@@ -1107,7 +1139,7 @@ TMR2                              00000011
 TMR2IE                            00000001
 TMR2IF                            00000001
 TMR2ON                            00000002
-TOS                               00000029
+TOS                               0000002A
 TOUTPS0                           00000003
 TOUTPS1                           00000004
 TOUTPS2                           00000005
@@ -1127,13 +1159,13 @@ TRISB3                            00000003
 TRISB4                            00000004
 TRISB5                            00000005
 TRISB6                            00000006
-TRISB7                            00000007
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 21
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISB7                            00000007
 TRISC                             00000087
 TRISC0                            00000000
 TRISC1                            00000001
@@ -1186,13 +1218,13 @@ _CP_ON                            00001FFF
 _DEBUG_OFF                        00003FFF
 _DEBUG_ON                         000037FF
 _DEVID1                           00002006
-_FOSC_EXTRC                       00003FFF
-MPASM  5.49                         FINAL.ASM   5-12-2013  9:35:50         PAGE 22
+MPASM  5.49                         FINAL.ASM   5-13-2013  23:18:39         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_FOSC_EXTRC                       00003FFF
 _FOSC_HS                          00003FFE
 _FOSC_LP                          00003FFC
 _FOSC_XT                          00003FFD
@@ -1218,13 +1250,15 @@ _WRT_OFF                          00003FFF
 _XT_OSC                           00003FFD
 __16F877A                         00000001
 __DEBUG                           1
-readdata                          0000020A
-readins                           00000211
+readdata                          0000020E
+readinput                         00000220
+readins                           00000226
 start                             00000010
 writedata                         00000200
+writeoutput                       00000219
 
 Errors   :     0
 Warnings :     7 reported,     0 suppressed
-Messages :    18 reported,     0 suppressed
+Messages :    20 reported,     0 suppressed
 
 

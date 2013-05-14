@@ -1,25 +1,27 @@
 Warning[215] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 4 : Processor superseded by command line.  Verify processor symbol.
 Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 24 : Found directive in column 1. (CBLOCK)
-Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 35 : Found directive in column 1. (ENDC)
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 45 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 47 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 49 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 36 : Found directive in column 1. (ENDC)
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 46 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 48 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 50 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 120 : Using default destination of 1 (file).
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 160 : Using default destination of 1 (file).
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 199 : Using default destination of 1 (file).
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 236 : Using default destination of 1 (file).
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 273 : Using default destination of 1 (file).
-Warning[207] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 338 : Found label after column 1. (L6R)
-Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 377 : Using default destination of 1 (file).
-Warning[202] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 551 : Argument out of range.  Least significant bits used.
-Warning[202] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 556 : Argument out of range.  Least significant bits used.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 639 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 641 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 642 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 644 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 649 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 651 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 652 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 654 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 658 : Found directive in column 1. (END)
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 51 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 121 : Using default destination of 1 (file).
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 161 : Using default destination of 1 (file).
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 200 : Using default destination of 1 (file).
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 237 : Using default destination of 1 (file).
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 274 : Using default destination of 1 (file).
+Warning[207] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 339 : Found label after column 1. (L6R)
+Message[305] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 378 : Using default destination of 1 (file).
+Warning[202] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 552 : Argument out of range.  Least significant bits used.
+Warning[202] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 557 : Argument out of range.  Least significant bits used.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 648 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 657 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 668 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 670 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 671 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 673 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 678 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 680 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 681 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 683 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\FINAL.ASM 687 : Found directive in column 1. (END)

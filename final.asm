@@ -25,6 +25,7 @@ CBLOCK	0x20
 INS1
 INS2
 MYSTATUS
+BANKSELECT
 PC
 DATAWRITE
 OFFSET
@@ -611,6 +612,11 @@ L14
 
 	ORG 0x200	
 writedata:
+	MOVF	BANKSELECT, W
+	XORLW	0x00
+	BTFSC	STATUS, Z
+	GOTO	writeoutput
+
 	movlw	0xA0
 	addwf	OFFSET, W
 	bsf		STATUS, RP0	; Bank 1
@@ -623,6 +629,11 @@ writedata:
 	return
 
 readdata:
+	MOVF	BANKSELECT, W
+	XORLW	0x00
+	BTFSC	STATUS, Z
+	GOTO	readinput
+
 	MOVLW	0xA0
 	ADDWF	OFFSET, W
 	BSF		STATUS, RP0	; Bank 1
@@ -631,8 +642,26 @@ readdata:
 	BCF		STATUS, RP0	; Bank 0
 	RETURN
 
+writeoutput:
+	BSF		STATUS, RP0	
+	MOVLW	0xFF
+	MOVWF	TRISD
+	BCF		STATUS, RP0
+	MOVF	DATAWRITE, W
+	MOVWF	PORTD
+	RETURN
+
+readinput:
+	BSF		STATUS, RP0	
+	MOVLW	0xFF
+	MOVWF	TRISD
+	BCF		STATUS, RP0
+
+	MOVF	PORTD, W
+	RETURN
+
 readins:
-	BCF		STATUS, C
+	BCF		STATUS, C	;we don't care. we have our own status register
 	RLF		PC, W;
 	BSF 	STATUS, RP1 ;
 	BCF 	STATUS, RP0 ;Bank 2
