@@ -1,0 +1,44 @@
+MPLINK 4.47, Linker
+Linker Map File - Created Thu May 09 23:15:02 2013
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_1       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_2       code   0x000010    program   0x000012
+                   .org_0       code   0x0000f0    program   0x000040
+      .config_2007_TEST.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000010    0x000018      
+                            0x0000f0    0x00010f      
+                            0x002007    0x002007      
+            45 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     loop   0x000012    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\test.asm
+                  readins   0x0000fa    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\subs.asm
+                    start   0x000010    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\test.asm
+                    write   0x0000f0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\subs.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    start   0x000010    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\test.asm
+                     loop   0x000012    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\test.asm
+                    write   0x0000f0    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\subs.asm
+                  readins   0x0000fa    program     static C:\Users\mark\Documents\Cooper Union\Work\CompArch\ASM\final2\subs.asm
+
+

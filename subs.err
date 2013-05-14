@@ -1,0 +1,97 @@
+Error[150]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 1 : Labels must be defined in a code or data section when making an object file
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 2 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 3 : Symbol not previously defined (OFFSET)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 3 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 4 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 4 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 4 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 5 : Symbol not previously defined (FSR)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 5 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 6 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 6 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 6 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 7 : Symbol not previously defined (DATAWRITE)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 7 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 8 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 8 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 8 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 9 : Symbol not previously defined (INDF)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 9 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 10 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 10 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 10 : Executable code and data must be defined in an appropriate section
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 11 : Executable code and data must be defined in an appropriate section
+Error[150]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 13 : Labels must be defined in a code or data section when making an object file
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 14 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 15 : Symbol not previously defined (OFFSET)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 15 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 16 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 16 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 16 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 17 : Symbol not previously defined (FSR)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 17 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 18 : Symbol not previously defined (INDF)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 18 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 19 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 19 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 19 : Executable code and data must be defined in an appropriate section
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 20 : Executable code and data must be defined in an appropriate section
+Error[150]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 22 : Labels must be defined in a code or data section when making an object file
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 23 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 23 : Symbol not previously defined (C)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 23 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 24 : Symbol not previously defined (PC)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 24 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 25 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 25 : Symbol not previously defined (RP1)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 25 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 26 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 26 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 26 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 27 : Symbol not previously defined (EEADR)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 27 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 28 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 28 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 28 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 29 : Symbol not previously defined (EECON1)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 29 : Symbol not previously defined (EEPGD)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 29 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 30 : Symbol not previously defined (EECON1)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 30 : Symbol not previously defined (RD)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 30 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 31 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 31 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 31 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 32 : Symbol not previously defined (EEDATA)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 32 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 33 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 33 : Symbol not previously defined (RP1)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 33 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 34 : Symbol not previously defined (INS1)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 34 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 36 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 36 : Symbol not previously defined (RP1)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 36 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 37 : Symbol not previously defined (EEADR)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 37 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 38 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 38 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 38 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 39 : Symbol not previously defined (EECON1)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 39 : Symbol not previously defined (EEPGD)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 39 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 40 : Symbol not previously defined (EECON1)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 40 : Symbol not previously defined (RD)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 40 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 41 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 41 : Symbol not previously defined (RP0)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 41 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 42 : Symbol not previously defined (EEDATA)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 42 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 43 : Symbol not previously defined (STATUS)
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 43 : Symbol not previously defined (RP1)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 43 : Executable code and data must be defined in an appropriate section
+Error[113]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 44 : Symbol not previously defined (INS2)
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 44 : Executable code and data must be defined in an appropriate section
+Error[152]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 45 : Executable code and data must be defined in an appropriate section
+Error[129]   C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 46 : Expected (END)

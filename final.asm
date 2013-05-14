@@ -18,6 +18,8 @@ CASE9	EQU	0x90
 CASE10	EQU	0xA0
 CASE11	EQU	0xB0
 CASE12	EQU	0xC0
+CASE13	EQU	0xD0
+CASE14	EQU	0xE0
 
 CBLOCK	0x20
 INS1
@@ -29,6 +31,7 @@ OFFSET
 OFFTMP
 DATATMP
 BB
+TOS
 ENDC
 
 	ORG 0x00
@@ -100,6 +103,12 @@ LJMP
 	XORLW	CASE11^CASE12
 	BTFSC	STATUS, Z
 	GOTO	L12
+	XORLW	CASE12^CASE13
+	BTFSC	STATUS, Z
+	GOTO	L13
+	XORLW	CASE13^CASE14
+	BTFSC	STATUS, Z
+	GOTO	L14
 
 L0	nop
 	GOTO	LSTART
@@ -552,10 +561,6 @@ L12	;Jump
 	BTFSC	INS1, 3
 	GOTO	L12b ; This is Jump based on Rb
 	
-	;MOVF	INS1, W
-	;ANDLW	0x07
-	;MOVWF	PC1
-	
 	MOVF	INS2, W
 	MOVWF	PC
 	GOTO 	LJMP
@@ -571,52 +576,83 @@ L12b
 	INCF	OFFSET, F
 	CALL	readdata
 	XORWF	PC, F
-	GOTO LJMP
+	GOTO 	LJMP
+
+L13	
+	;JSR
+	INCF	PC, W
+	MOVWF	TOS
+	
+	BTFSC	INS1, 3
+	GOTO	L13b ; This is JSR to Ra
+
+	; This is JSR to literal k
+	MOVF	INS2, W
+	MOVWF	PC
+	GOTO 	LJMP
+
+L13b
+	MOVF	INS2, W		
+	ANDLW	0x0F
+	MOVWF	OFFSET
+	CALL	readdata
+	MOVWF	PC
+	SWAPF	PC, F
+	INCF	OFFSET, F
+	CALL	readdata
+	XORWF	PC, F
+	GOTO	LJMP
+
+L14	
+	MOVF	TOS, W
+	MOVWF	PC
+	GOTO	LJMP
+
 
 	ORG 0x200	
 writedata:
 	movlw	0xA0
 	addwf	OFFSET, W
-	bsf	STATUS, RP0	; Bank 1
+	bsf		STATUS, RP0	; Bank 1
 	movwf	FSR
-	bcf	STATUS, RP0	; Bank 0
+	bcf		STATUS, RP0	; Bank 0
 	movf	DATAWRITE, W
-	bsf	STATUS, RP0	; Bank 1
+	bsf		STATUS, RP0	; Bank 1
 	MOVWF	INDF
-	bcf STATUS, RP0
+	bcf 	STATUS, RP0
 	return
 
 readdata:
-	movlw	0xA0
-	addwf	OFFSET, W
-	bsf	STATUS, RP0	; Bank 1
-	movwf	FSR
+	MOVLW	0xA0
+	ADDWF	OFFSET, W
+	BSF		STATUS, RP0	; Bank 1
+	MOVWF	FSR
 	MOVF	INDF, W
-	bcf	STATUS, RP0	; Bank 0
-	return
+	BCF		STATUS, RP0	; Bank 0
+	RETURN
 
 readins:
-	BCF	STATUS, C
-	RLF	PC, W;
-	BSF STATUS, RP1 ;
-	BCF STATUS, RP0 ;Bank 2
-	MOVWF EEADR ;to read from
-	BSF STATUS, RP0 ;Bank 3
-	BCF EECON1, EEPGD ;Point to Data memory
-	BSF EECON1, RD ;Start read operation
-	BCF STATUS, RP0 ;Bank 2
-	MOVF EEDATA, W ;
-	BCF	STATUS, RP1
+	BCF		STATUS, C
+	RLF		PC, W;
+	BSF 	STATUS, RP1 ;
+	BCF 	STATUS, RP0 ;Bank 2
+	MOVWF 	EEADR ;to read from
+	BSF 	STATUS, RP0 ;Bank 3
+	BCF 	EECON1, EEPGD ;Point to Data memory
+	BSF 	EECON1, RD ;Start read operation
+	BCF 	STATUS, RP0 ;Bank 2
+	MOVF 	EEDATA, W ;
+	BCF		STATUS, RP1
 	MOVWF	INS1
 	
-	BSF STATUS, RP1
-	INCF EEADR, F ;to read from
-	BSF STATUS, RP0 ;Bank 3
-	BCF EECON1, EEPGD ;Point to Data memory
-	BSF EECON1, RD ;Start read operation
-	BCF STATUS, RP0 ;Bank 2
-	MOVF EEDATA, W ;W = EEDATA
-	BCF	STATUS, RP1
+	BSF 	STATUS, RP1
+	INCF 	EEADR, F ;to read from
+	BSF 	STATUS, RP0 ;Bank 3
+	BCF 	EECON1, EEPGD ;Point to Data memory
+	BSF 	EECON1, RD ;Start read operation
+	BCF 	STATUS, RP0 ;Bank 2
+	MOVF 	EEDATA, W ;W = EEDATA
+	BCF		STATUS, RP1
 	MOVWF	INS2
-	return
+	RETURN
 END

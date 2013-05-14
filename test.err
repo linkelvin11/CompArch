@@ -1,0 +1,13 @@
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\TEST.ASM 3 : Found directive in column 1. (LIST)
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\TEST.ASM 14 : Found directive in column 1. (ORG)
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 20 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 22 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 23 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 25 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 30 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 32 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 33 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\SUBS.ASM 35 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\TEST.ASM 16 : Found directive in column 1. (ORG)
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\TEST.ASM 19 : Found directive in column 1. (ORG)
+Warning[205] C:\USERS\MARK\DOCUMENTS\COOPER UNION\WORK\COMPARCH\ASM\FINAL2\TEST.ASM 33 : Found directive in column 1. (end)

@@ -1,0 +1,177 @@
+MPASM  5.49                          SUBS.ASM   5-10-2013  0:26:38         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[150]  : Labels must be defined in a code or data section when making an object file
+0000                  00001 writedata:
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00002         movlw   0xA0
+Error[113]  : Symbol not previously defined (OFFSET)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00003         addwf   OFFSET, W
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00004         bsf     STATUS, RP0     ; Bank 1
+Error[113]  : Symbol not previously defined (FSR)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00005         movwf   FSR
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00006         bcf     STATUS, RP0     ; Bank 0
+Error[113]  : Symbol not previously defined (DATAWRITE)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00007         movf    DATAWRITE, W
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00008         bsf     STATUS, RP0     ; Bank 1
+Error[113]  : Symbol not previously defined (INDF)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00009         MOVWF   INDF
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00010         bcf STATUS, RP0
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00011         return
+                      00012 
+Error[150]  : Labels must be defined in a code or data section when making an object file
+0000                  00013 readdata:
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00014         movlw   0xA0
+Error[113]  : Symbol not previously defined (OFFSET)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00015         addwf   OFFSET, W
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00016         bsf     STATUS, RP0     ; Bank 1
+Error[113]  : Symbol not previously defined (FSR)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00017         movwf   FSR
+Error[113]  : Symbol not previously defined (INDF)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00018         MOVF    INDF, W
+Error[113]  : Symbol not previously defined (STATUS)
+MPASM  5.49                          SUBS.ASM   5-10-2013  0:26:38         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00019         bcf     STATUS, RP0     ; Bank 0
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00020         return
+                      00021 
+Error[150]  : Labels must be defined in a code or data section when making an object file
+0000                  00022 readins:
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00023         BCF     STATUS, C
+Error[113]  : Symbol not previously defined (PC)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00024         RLF     PC, W;
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP1)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00025         BSF STATUS, RP1 ;
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00026         BCF STATUS, RP0 ;Bank 2
+Error[113]  : Symbol not previously defined (EEADR)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00027         MOVWF EEADR ;to read from
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00028         BSF STATUS, RP0 ;Bank 3
+Error[113]  : Symbol not previously defined (EECON1)
+Error[113]  : Symbol not previously defined (EEPGD)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00029         BCF EECON1, EEPGD ;Point to Data memory
+Error[113]  : Symbol not previously defined (EECON1)
+Error[113]  : Symbol not previously defined (RD)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00030         BSF EECON1, RD ;Start read operation
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00031         BCF STATUS, RP0 ;Bank 2
+Error[113]  : Symbol not previously defined (EEDATA)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00032         MOVF EEDATA, W ;
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP1)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00033         BCF     STATUS, RP1
+Error[113]  : Symbol not previously defined (INS1)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00034         MOVWF   INS1
+                      00035         
+MPASM  5.49                          SUBS.ASM   5-10-2013  0:26:38         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP1)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00036         BSF STATUS, RP1
+Error[113]  : Symbol not previously defined (EEADR)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00037         INCF EEADR, F ;to read from
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00038         BSF STATUS, RP0 ;Bank 3
+Error[113]  : Symbol not previously defined (EECON1)
+Error[113]  : Symbol not previously defined (EEPGD)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00039         BCF EECON1, EEPGD ;Point to Data memory
+Error[113]  : Symbol not previously defined (EECON1)
+Error[113]  : Symbol not previously defined (RD)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00040         BSF EECON1, RD ;Start read operation
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00041         BCF STATUS, RP0 ;Bank 2
+Error[113]  : Symbol not previously defined (EEDATA)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00042         MOVF EEDATA, W ;W = EEDATA
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (RP1)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00043         BCF     STATUS, RP1
+Error[113]  : Symbol not previously defined (INS2)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00044         MOVWF   INS2
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00045         return
+Error[129]  : Expected (END)
+MPASM  5.49                          SUBS.ASM   5-10-2013  0:26:38         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+__16F877A                         00000001
+__DEBUG                           1
+readdata                          00000000
+readins                           00000000
+writedata                         00000000
+
+Errors   :    97
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
